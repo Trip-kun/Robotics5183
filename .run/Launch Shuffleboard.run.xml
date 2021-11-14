@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Launch Shuffleboard" type="JarApplication" activateToolWindowBeforeRun="false">
+    <option name="JAR_PATH" value="C:\Users\Public\wpilib\2021\tools\shuffleboard.jar" />
+    <module name="Robotics5183.main" />
+    <method v="2" />
+  </configuration>
+</component>
