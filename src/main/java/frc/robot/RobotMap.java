@@ -8,7 +8,7 @@ public class RobotMap {
     Config 1: MS Paint Robot
     config 2: Steve Robot
      */
-    public static final int config = 0;
+    public static final int config = 2;
     public static final boolean safety = true;
     // Basically Ethan's Code that I haven't taken the time to understand yet.
     public static SupplyCurrentLimitConfiguration driveCurrentLimit = new SupplyCurrentLimitConfiguration(true, 30, 0 , 0.2);

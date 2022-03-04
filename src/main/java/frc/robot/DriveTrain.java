@@ -116,7 +116,7 @@ public class DriveTrain {
         double x=-xbox.getY(GenericHID.Hand.kLeft);
 
         // Grab Value of Left Bumper
-        boolean speed = xbox.getBumper(GenericHID.Hand.kLeft);
+        boolean speed = xbox.getXButtonPressed();
         // Halve speed when left bumper is pressed
         if (speed) {x=x/2;}
 
