@@ -1,7 +1,6 @@
-package frc.robot.hardware;
+package frc.robot.subsystem.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import frc.robot.hardware.Motor;
 
 public class TalonFXMotor extends Motor {
     private WPI_TalonFX talonMotor;

@@ -1,8 +1,7 @@
-package frc.robot.hardware;
+package frc.robot.subsystem.hardware;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
-import frc.robot.hardware.Motor;
 
 public class SparkMotor extends Motor {
     private Spark sparkMotor;

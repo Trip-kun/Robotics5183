@@ -7,9 +7,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.hardware.RomiInputOutput;
-import frc.robot.hardware.SparkMotor;
-import frc.robot.hardware.TalonFXMotor;
+import frc.robot.subsystem.DriveTrain;
+import frc.robot.subsystem.hardware.RomiInputOutput;
+import frc.robot.subsystem.hardware.SparkMotor;
+import frc.robot.subsystem.hardware.TalonFXMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to

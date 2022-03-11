@@ -1,17 +1,18 @@
-package frc.robot;
+package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.hardware.Motor;
-import frc.robot.hardware.RomiInputOutput;
-import frc.robot.hardware.SparkMotor;
-import frc.robot.hardware.TalonFXMotor;
+import frc.robot.RobotMap;
+import frc.robot.subsystem.hardware.Motor;
+import frc.robot.subsystem.hardware.RomiInputOutput;
+import frc.robot.subsystem.hardware.TalonFXMotor;
 
-public class DriveTrain {
+public class DriveTrain extends Subsystem {
     private DifferentialDrive drive;
     private Motor leftMotor;
     private Motor rightMotor;
@@ -130,6 +131,12 @@ public class DriveTrain {
                 break;
             }
     }
+
+    @Override
+    protected void initDefaultCommand() {
+
+    }
+
     public void periodic() {
 
         // In all Robot Configs run left and right motor periodics
