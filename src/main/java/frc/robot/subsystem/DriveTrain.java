@@ -10,25 +10,27 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.subsystem.hardware.Motor;
 import frc.robot.subsystem.hardware.RomiInputOutput;
+import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.TalonFXMotor;
 
 public class DriveTrain extends Subsystem {
-    private DifferentialDrive drive;
-    private Motor leftMotor;
-    private Motor rightMotor;
-    private Motor rightRearMotor;
-    private Motor leftRearMotor;
-    private XboxController xbox;
-    private RomiInputOutput romiIO;
-    private Timer timer = new Timer();
-    public DriveTrain(TalonFXMotor lm, TalonFXMotor rm, TalonFXMotor lrm, TalonFXMotor rrm, XboxController xbx) {
+    public DifferentialDrive drive;
+    public Motor leftMotor;
+    public Motor rightMotor;
+    public Motor rightRearMotor;
+    public Motor leftRearMotor;
+    public XboxController xbox;
+    public RomiInputOutput romiIO;
+    public Timer timer = new Timer();
+    public SPIGyroscope gyroscope;
+    public DriveTrain(TalonFXMotor lm, TalonFXMotor rm, TalonFXMotor lrm, TalonFXMotor rrm, XboxController xbx, SPIGyroscope gyro) {
         // Assigning Values passed into constructor
         leftMotor=lm;
         rightMotor=rm;
         leftRearMotor=lrm;
         rightRearMotor=rrm;
         xbox=xbx;
-
+        gyroscope=gyro;
         // Creating a DifferentialDrive used for ArcadeDrive
         drive = new DifferentialDrive(leftMotor.getRawMotor(), rightMotor.getRawMotor());
 
@@ -108,7 +110,6 @@ public class DriveTrain extends Subsystem {
         rightMotor.setSafety(RobotMap.safety);
         romiIO.setRedLight(!(RobotMap.safety));
         romiIO.setGreenLight(true);
-
     }
 
     public void ArcadeDrive(boolean squared) {
@@ -117,10 +118,9 @@ public class DriveTrain extends Subsystem {
         double x=-xbox.getY(GenericHID.Hand.kLeft);
 
         // Grab Value of Left Bumper
-        boolean speed = xbox.getXButtonPressed();
+        boolean speed = xbox.getBumper(GenericHID.Hand.kLeft);
         // Halve speed when left bumper is pressed
-        if (speed) {x=x/2;}
-
+        if (speed) {x=x/2; y=y/2;}
         // In all Robot Configs pass values to the main DifferentialDrive for use in
         // arcadeDrive function. No need to use motor SET function.
         switch (RobotMap.config) {

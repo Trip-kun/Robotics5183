@@ -5,10 +5,18 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.TurnDriveTrain;
+import frc.robot.commands.TurnModes;
 import frc.robot.subsystem.DriveTrain;
+import frc.robot.subsystem.LiftSpool;
 import frc.robot.subsystem.hardware.RomiInputOutput;
+import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.SparkMotor;
 import frc.robot.subsystem.hardware.TalonFXMotor;
 
@@ -20,7 +28,9 @@ import frc.robot.subsystem.hardware.TalonFXMotor;
  */
 public class Robot extends TimedRobot
 {
+    Scheduler scheduler = Scheduler.getInstance();
     DriveTrain driveTrain;
+    LiftSpool liftSpool;
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -30,7 +40,9 @@ public class Robot extends TimedRobot
     {
         switch (RobotMap.config) {
             case 2:
-                driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), new XboxController(RobotMap.ControllerNumber));
+                driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), new XboxController(RobotMap.ControllerNumber), new SPIGyroscope(new ADXRS450_Gyro()));
+                liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), new XboxController(RobotMap.ControllerNumber));
+                driveTrain.gyroscope.calibrate();
                 break;
             case 1:
                 driveTrain = new DriveTrain(new SparkMotor(RobotMap.leftMotor), new SparkMotor(RobotMap.rightMotor), new XboxController(RobotMap.ControllerNumber), new RomiInputOutput());
@@ -54,6 +66,7 @@ public class Robot extends TimedRobot
     @Override
     public void robotPeriodic() {
         driveTrain.periodic();
+        liftSpool.periodic();
     }
 
     /**
@@ -69,12 +82,16 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+
+        Command command2 = new TurnDriveTrain(TurnModes.RELATIVE, -45, driveTrain, 0.25, new InstantCommand());          ;
+        scheduler.add(new TurnDriveTrain(TurnModes.RELATIVE, 270, driveTrain, 0.25, command2));
     }
 
     /** This method is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic()
     {
+        scheduler.run();
     }
 
     /** This function is called once when teleop is enabled. */
@@ -85,6 +102,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() {
         driveTrain.ArcadeDrive(true);
+        liftSpool.Drive();
     }
 
     /** This function is called once when the robot is disabled. */
