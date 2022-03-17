@@ -12,8 +12,13 @@ public class TurnDriveTrainThread extends Thread {
     public Direction direction;
     public double MaxSpeed;
     public double t;
+
     public TurnDriveTrainThread(DriveTrain drivetrain, double newangle, Direction dir, double maxSpeed, double T) {
-        driveTrain=drivetrain; newAngle=newangle; direction=dir; MaxSpeed=maxSpeed; t=T;
+        driveTrain = drivetrain;
+        newAngle = newangle;
+        direction = dir;
+        MaxSpeed = maxSpeed;
+        t = T;
     }
 
     @Override
@@ -57,20 +62,19 @@ public class TurnDriveTrainThread extends Thread {
                 double speed = Math.max(0.01, MaxSpeed);
                 switch (direction) {
                     case CLOCKWISE:
-                        driveTrain.leftMotor.setSpeed(-speed);
-                        driveTrain.rightMotor.setSpeed(-speed);
+                        driveTrain.leftMotor.set(-speed);
+                        driveTrain.rightMotor.set(-speed);
                         break;
                     case COUNTERCLOCKWISE:
-                        driveTrain.leftMotor.setSpeed(speed);
-                        driveTrain.rightMotor.setSpeed(speed);
-
+                        driveTrain.leftMotor.set(speed);
+                        driveTrain.rightMotor.set(speed);
 
                         break;
                 }
             }
-            if (currentAngle == newAngle && MaxSpeed<=0.1) {
-                driveTrain.leftMotor.setSpeed(0);
-                driveTrain.rightMotor.setSpeed(0);
+            if (currentAngle == newAngle && MaxSpeed <= 0.1) {
+                driveTrain.leftMotor.set(0);
+                driveTrain.rightMotor.set(0);
                 break;
             }
         }

@@ -21,12 +21,13 @@ public class RobotMap {
     public static final int LowerRightMotor=4;
 
     //RPM, INCHES
-    public static final int TalonSpeed = 6380;
+    public static final double TalonGearbox=5.95;
     public static final int TalonDiameter = 6;
     // These are for Spark motors.
     public static final int leftMotor=1;
     public static final int rightMotor=2;
     public static final int spoolMotor=1;
+    public static final int rotatorMotor=0;
 
     public static final int ControllerNumber=0;
     public static final int Controller2Number=1;

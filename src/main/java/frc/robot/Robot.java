@@ -15,6 +15,7 @@ import frc.robot.commands.TurnDriveTrain;
 import frc.robot.commands.TurnModes;
 import frc.robot.subsystem.DriveTrain;
 import frc.robot.subsystem.LiftSpool;
+import frc.robot.subsystem.ShooterRotator;
 import frc.robot.subsystem.hardware.RomiInputOutput;
 import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.SparkMotor;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot
     Scheduler scheduler = Scheduler.getInstance();
     DriveTrain driveTrain;
     LiftSpool liftSpool;
+    ShooterRotator shooterRotator;
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -41,7 +43,8 @@ public class Robot extends TimedRobot
         switch (RobotMap.config) {
             case 2:
                 driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), new XboxController(RobotMap.ControllerNumber), new SPIGyroscope(new ADXRS450_Gyro()));
-                liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), new XboxController(RobotMap.ControllerNumber));
+                liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), new XboxController(RobotMap.Controller2Number));
+                shooterRotator = new ShooterRotator(new SparkMotor(RobotMap.rotatorMotor), new XboxController(RobotMap.Controller2Number));
                 driveTrain.gyroscope.calibrate();
                 break;
             case 1:
@@ -67,6 +70,7 @@ public class Robot extends TimedRobot
     public void robotPeriodic() {
         driveTrain.periodic();
         liftSpool.periodic();
+        shooterRotator.periodic();
     }
 
     /**
@@ -103,6 +107,7 @@ public class Robot extends TimedRobot
     public void teleopPeriodic() {
         driveTrain.ArcadeDrive(true);
         liftSpool.Drive();
+        shooterRotator.autonomous();
     }
 
     /** This function is called once when the robot is disabled. */

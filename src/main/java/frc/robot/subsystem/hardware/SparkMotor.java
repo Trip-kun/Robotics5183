@@ -1,45 +1,39 @@
 package frc.robot.subsystem.hardware;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
-public class SparkMotor extends Motor {
+public class SparkMotor {
     private Spark sparkMotor;
+
     public SparkMotor(int port) {
         sparkMotor = new Spark(port);
     }
-    @Override
-    public void setSpeed(double speed) {
-        sparkMotor.setSpeed(speed);
+
+    public void set(double speed) {
+        sparkMotor.set(speed);
     }
 
-    @Override
     public void periodic() {
         sparkMotor.feed();
     }
 
-    @Override
-    public double getSpeed() {
-        return sparkMotor.getSpeed();
+    public double get() {
+        return sparkMotor.get();
     }
 
-    @Override
     public void setSafety(boolean on) {
         sparkMotor.setSafetyEnabled(on);
     }
 
-    @Override
     public void setInverted(boolean inverted) {
         sparkMotor.setInverted(inverted);
     }
 
-    @Override
     public boolean getInverted() {
         return sparkMotor.getInverted();
     }
 
-    @Override
-    public SpeedController getRawMotor() {
+    public Spark getRawMotor() {
         return sparkMotor;
     }
 }
