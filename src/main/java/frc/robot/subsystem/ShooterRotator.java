@@ -13,8 +13,11 @@ public class ShooterRotator extends Subsystem {
     public void periodic() {
         motor.periodic();
     }
-    public void autonomous() {
+    public void teleop() {
         motor.set(0.25*xbox.getLeftY());
+    }
+    public void setMotor(double speed) {
+        motor.set(speed);
     }
     @Override
     protected void initDefaultCommand() {

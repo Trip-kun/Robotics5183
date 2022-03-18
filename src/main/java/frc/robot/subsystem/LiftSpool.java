@@ -32,6 +32,9 @@ public class LiftSpool extends Subsystem {
         spoolMotor.periodic();
     }
 
+    public void setMotors(double speed) {
+        spoolMotor.set(speed);
+    }
     @Override
     protected void initDefaultCommand() {
 

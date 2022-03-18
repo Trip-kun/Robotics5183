@@ -12,7 +12,6 @@ public class TurnDriveTrainThread extends Thread {
     public Direction direction;
     public double MaxSpeed;
     public double t;
-
     public TurnDriveTrainThread(DriveTrain drivetrain, double newangle, Direction dir, double maxSpeed, double T) {
         driveTrain = drivetrain;
         newAngle = newangle;

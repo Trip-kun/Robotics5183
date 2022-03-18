@@ -117,6 +117,36 @@ public class DriveTrain extends Subsystem {
         romiIO.setGreenLight(true);
     }
 
+
+    public void driveExp() { // cut only allow for values to the hundreth power to be passed to the motors, cut off the rest.
+        /** Settings
+         xExaggeration: How steep or aggressive the curve is. A higher value bends the curve more, or makes it steeper. For forward/backward speed.
+         yExaggeration: See above. For turning speed.
+         deadzone: this is a percentage value to avoid any movement when the robot should be stopped. Needed due to the joysticks hardware inaccuracies. Also saves the motors from stalling and saves battery. Compared to input rather than output.
+         */
+
+        double x=xbox.getLeftY();
+
+        double z=xbox.getRightX();
+
+        double xExaggeration = 2.0, yExaggeration = 1.0, deadzone = 0.09;
+
+        if(x > deadzone) {
+            x = ((java.lang.Math.pow(1+xExaggeration, x)-1)/xExaggeration);
+        } else if(x < -deadzone) {
+            x = (-((java.lang.Math.pow(1+xExaggeration, -x)-1)/xExaggeration));
+        } else {
+            x = 0;
+        }
+        if(z > deadzone) {
+            z = (-((java.lang.Math.pow(1+yExaggeration, z)-1))/yExaggeration);
+        } else if(z < -deadzone) {
+            z = ((java.lang.Math.pow(1+yExaggeration, -z)-1)/yExaggeration);
+        } else {
+            z = 0;
+        }
+        drive.arcadeDrive(x, z);
+    }
     public void ArcadeDrive(boolean squared) {
         // Grabbing Axis Values from Xbox Controller.
         double y = xbox.getRightX();

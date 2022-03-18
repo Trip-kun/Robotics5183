@@ -15,6 +15,7 @@ import frc.robot.commands.TurnDriveTrain;
 import frc.robot.commands.TurnModes;
 import frc.robot.subsystem.DriveTrain;
 import frc.robot.subsystem.LiftSpool;
+import frc.robot.subsystem.Shooter;
 import frc.robot.subsystem.ShooterRotator;
 import frc.robot.subsystem.hardware.RomiInputOutput;
 import frc.robot.subsystem.hardware.SPIGyroscope;
@@ -29,10 +30,11 @@ import frc.robot.subsystem.hardware.TalonFXMotor;
  */
 public class Robot extends TimedRobot
 {
-    Scheduler scheduler = Scheduler.getInstance();
+    public Scheduler scheduler = Scheduler.getInstance();
     DriveTrain driveTrain;
     LiftSpool liftSpool;
     ShooterRotator shooterRotator;
+    Shooter shooter;
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -45,6 +47,7 @@ public class Robot extends TimedRobot
                 driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), new XboxController(RobotMap.ControllerNumber), new SPIGyroscope(new ADXRS450_Gyro()));
                 liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), new XboxController(RobotMap.Controller2Number));
                 shooterRotator = new ShooterRotator(new SparkMotor(RobotMap.rotatorMotor), new XboxController(RobotMap.Controller2Number));
+                shooter=new Shooter(new SparkMotor(RobotMap.leftShooterMotor),new SparkMotor( RobotMap.rightShooterMotor), new XboxController(RobotMap.Controller2Number));
                 driveTrain.gyroscope.calibrate();
                 break;
             case 1:
@@ -71,6 +74,7 @@ public class Robot extends TimedRobot
         driveTrain.periodic();
         liftSpool.periodic();
         shooterRotator.periodic();
+        shooter.periodic();
     }
 
     /**
@@ -105,9 +109,10 @@ public class Robot extends TimedRobot
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        driveTrain.ArcadeDrive(true);
+        driveTrain.driveExp();
         liftSpool.Drive();
-        shooterRotator.autonomous();
+        shooterRotator.teleop();
+        shooter.Drive();
     }
 
     /** This function is called once when the robot is disabled. */

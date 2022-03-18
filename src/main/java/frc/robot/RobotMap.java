@@ -28,6 +28,9 @@ public class RobotMap {
     public static final int rightMotor=2;
     public static final int spoolMotor=1;
     public static final int rotatorMotor=0;
+    public static final int leftShooterMotor=-1;
+    public static final int rightShooterMotor=-1;
+
 
     public static final int ControllerNumber=0;
     public static final int Controller2Number=1;

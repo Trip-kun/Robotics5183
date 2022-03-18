@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Util;
 import frc.robot.subsystem.DriveTrain;
@@ -25,7 +26,7 @@ public class TurnDriveTrain extends Command {
     private double MaxSpeed = 1;
     private boolean started = false;
     TurnDriveTrainThread driveTrainThread;
-
+    private Scheduler scheduler = Scheduler.getInstance();
     public TurnDriveTrain(TurnModes mode, double new_angle, DriveTrain drivetrain, double maxSpeed, Command command) {
         requires(drivetrain);
         endCommand = command;
@@ -157,7 +158,7 @@ public class TurnDriveTrain extends Command {
 
         if (!driveTrainThread.isAlive()) {
             is_finished = true;
-            endCommand.start();
+            scheduler.add(endCommand);
         }
     }
 
