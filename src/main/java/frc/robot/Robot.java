@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.MoveDriveTrainByDistance;
 import frc.robot.commands.TurnDriveTrain;
 import frc.robot.commands.TurnModes;
 import frc.robot.subsystem.DriveTrain;
@@ -91,8 +92,9 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
 
-        Command command2 = new TurnDriveTrain(TurnModes.RELATIVE, -45, driveTrain, 0.25, new InstantCommand());          ;
-        scheduler.add(new TurnDriveTrain(TurnModes.RELATIVE, 270, driveTrain, 0.25, command2));
+        //Command command2 = new TurnDriveTrain(TurnModes.RELATIVE, -45, driveTrain, 0.25, new InstantCommand());          ;
+        //scheduler.add(new TurnDriveTrain(TurnModes.RELATIVE, 270, driveTrain, 0.25, command2));
+        scheduler.add(new MoveDriveTrainByDistance(-1.0, 48, false, driveTrain, new InstantCommand()));
     }
 
     /** This method is called periodically during autonomous. */
@@ -109,7 +111,7 @@ public class Robot extends TimedRobot
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        driveTrain.driveExp();
+        driveTrain.ArcadeDrive(true);
         liftSpool.Drive();
         shooterRotator.teleop();
         shooter.Drive();

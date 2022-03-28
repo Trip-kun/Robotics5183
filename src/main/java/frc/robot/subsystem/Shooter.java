@@ -17,21 +17,21 @@ public class Shooter extends Subsystem {
     public void Drive() {
         double speed = 0;
         if(xbox.getXButton()==true) {
-            speed=1;
+            speed=-0.90;
         }
         if (xbox.getAButton()==true) {
-            speed=-1;
+            speed=1;
         }
         leftMotor.set(speed);
         rightMotor.set(-speed);
     }
     public void Shoot() {
-        leftMotor.set(1);
-        rightMotor.set(-1);
+        leftMotor.set(-1);
+        rightMotor.set(1);
     }
     public void Intake() {
         leftMotor.set(-1);
-        rightMotor.set(1);
+        rightMotor.set(-1);
     }
     public void Reset() {
         leftMotor.set(0);

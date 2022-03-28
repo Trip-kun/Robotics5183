@@ -40,9 +40,9 @@ public class DriveTrain extends Subsystem {
         TalonFXleftMotor.getRawMotor().setStatusFramePeriod(21, 20);
         // No need to invert either side. Setting all motors to no inversion.
         TalonFXleftMotor.setInverted(false);
-        TalonFXrightMotor.setInverted(false);
+        TalonFXrightMotor.setInverted(true);
         TalonFXleftRearMotor.setInverted(false);
-        TalonFXrightRearMotor.setInverted(false);
+        TalonFXrightRearMotor.setInverted(true);
 
         // Setting Motor Safety to TRUE. DON'T DISABLE
         TalonFXleftMotor.setSafety(true);
@@ -165,11 +165,25 @@ public class DriveTrain extends Subsystem {
             case 0:
             case 1:
             case 2:
-                drive.arcadeDrive(x, y, squared);
+                drive.arcadeDrive(x*0.75, y*0.75, squared);
                 break;
         }
     }
 
+
+    public void ArcadeDriveAutonomous(boolean squared, double x, double y) {
+        // Grabbing Axis Values from Xbox Controller.
+        // Grab Value of Left Bumper
+        // In all Robot Configs pass values to the main DifferentialDrive for use in
+        // arcadeDrive function. No need to use motor SET function.
+        switch (RobotMap.config) {
+            case 0:
+            case 1:
+            case 2:
+                drive.arcadeDrive(x*0.75, y*0.75, squared);
+                break;
+        }
+    }
     @Override
     protected void initDefaultCommand() {
 
