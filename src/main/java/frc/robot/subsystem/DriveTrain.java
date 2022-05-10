@@ -151,7 +151,10 @@ public class DriveTrain extends Subsystem {
         // Grabbing Axis Values from Xbox Controller.
         double y = xbox.getRightX();
         double x = -xbox.getLeftY();
-
+        double multiple =0.60;
+        if (xbox.getYButton()) {
+            multiple=1.0;
+        }
         // Grab Value of Left Bumper
         boolean speed = xbox.getLeftBumper();
         // Halve speed when left bumper is pressed
@@ -165,7 +168,7 @@ public class DriveTrain extends Subsystem {
             case 0:
             case 1:
             case 2:
-                drive.arcadeDrive(x*0.75, y*0.75, squared);
+                drive.arcadeDrive(x*multiple, y*multiple, squared);
                 break;
         }
     }

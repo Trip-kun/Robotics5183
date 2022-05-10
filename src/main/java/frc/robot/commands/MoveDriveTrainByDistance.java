@@ -61,9 +61,12 @@ public class MoveDriveTrainByDistance extends Command {
         }
 
 */
-
-
-        if (count>=1.5) {
+        double offset=8;
+        if (count<=offset) {
+            driveTrain.TalonFXleftMotor.set(0.0);
+            driveTrain.TalonFXrightMotor.set(0.0);
+        }
+        if (count>=2.5+offset) {
             System.out.println("FINISHED");
             driveTrain.TalonFXleftMotor.set(0.0);
             driveTrain.TalonFXrightMotor.set(0.0);
