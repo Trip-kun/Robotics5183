@@ -1,10 +1,12 @@
 package frc.robot.subsystem;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.subsystem.hardware.SparkMotor;
 
+/**
+ * @deprecated To Be Replaced With IntakeShaft and IntakeManager
+ */
 public class LiftSpool extends Subsystem {
     private SparkMotor spoolMotor;
     private XboxController xbox;

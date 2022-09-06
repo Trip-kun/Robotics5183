@@ -2,13 +2,11 @@ package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
-import frc.robot.subsystem.hardware.RomiInputOutput;
 import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.SparkMotor;
 import frc.robot.subsystem.hardware.TalonFXMotor;
@@ -22,7 +20,6 @@ public class DriveTrain extends Subsystem {
     public SparkMotor leftMotor;
     public SparkMotor rightMotor;
     public XboxController xbox;
-    public RomiInputOutput romiIO;
     public Timer timer = new Timer();
     public SPIGyroscope gyroscope;
 
@@ -81,41 +78,7 @@ public class DriveTrain extends Subsystem {
         rrm.getRawMotor().configSupplyCurrentLimit(RobotMap.driveCurrentLimit);
     }
 
-    public DriveTrain(SparkMotor l, SparkMotor r, XboxController xbx) {
-        // Assigning Values passed into constructor
-        leftMotor = l;
-        rightMotor = r;
-        xbox = xbx;
-        // Creating a DifferentialDrive used for ArcadeDrive
-        drive = new DifferentialDrive(leftMotor.getRawMotor(), rightMotor.getRawMotor());
-        // No need to invert either side. Setting all motors to no inversion.
-        leftMotor.setInverted(false);
-        rightMotor.setInverted(false);
 
-        // Setting Motor Safety to TRUE. DON'T DISABLE
-        leftMotor.setSafety(true);
-        rightMotor.setSafety(true);
-    }
-
-    public DriveTrain(SparkMotor l, SparkMotor r, XboxController xbx, RomiInputOutput rio) {
-        // Assigning Values passed into constructor
-        leftMotor = l;
-        rightMotor = r;
-        xbox = xbx;
-        romiIO = rio;
-        timer.start();
-        // Creating a DifferentialDrive used for ArcadeDrive
-        drive = new DifferentialDrive(leftMotor.getRawMotor(), rightMotor.getRawMotor());
-        // No need to invert either side. Setting all motors to no inversion.
-        leftMotor.setInverted(false);
-        rightMotor.setInverted(false);
-
-        // Setting Motor Safety to TRUE. DON'T DISABLE
-        leftMotor.setSafety(RobotMap.safety);
-        rightMotor.setSafety(RobotMap.safety);
-        romiIO.setRedLight(!(RobotMap.safety));
-        romiIO.setGreenLight(true);
-    }
 
 
     public void driveExp() { // cut only allow for values to the hundreth power to be passed to the motors, cut off the rest.
@@ -151,7 +114,7 @@ public class DriveTrain extends Subsystem {
         // Grabbing Axis Values from Xbox Controller.
         double y = xbox.getRightX();
         double x = -xbox.getLeftY();
-        double multiple =0.60;
+        double multiple =RobotMap.MaxSpeed;
         if (xbox.getYButton()) {
             multiple=1.0;
         }
@@ -164,13 +127,8 @@ public class DriveTrain extends Subsystem {
         }
         // In all Robot Configs pass values to the main DifferentialDrive for use in
         // arcadeDrive function. No need to use motor SET function.
-        switch (RobotMap.config) {
-            case 0:
-            case 1:
-            case 2:
-                drive.arcadeDrive(x*multiple, y*multiple, squared);
-                break;
-        }
+
+        drive.arcadeDrive(x*multiple, y*multiple, squared);
     }
 
 
@@ -179,13 +137,7 @@ public class DriveTrain extends Subsystem {
         // Grab Value of Left Bumper
         // In all Robot Configs pass values to the main DifferentialDrive for use in
         // arcadeDrive function. No need to use motor SET function.
-        switch (RobotMap.config) {
-            case 0:
-            case 1:
-            case 2:
-                drive.arcadeDrive(x*0.75, y*0.75, squared);
-                break;
-        }
+        drive.arcadeDrive(x*RobotMap.MaxSpeed, y*RobotMap.MaxSpeed, squared);
     }
     @Override
     protected void initDefaultCommand() {
@@ -196,25 +148,11 @@ public class DriveTrain extends Subsystem {
 
         // In all Robot Configs run left and right motor periodics
         // In STEVE run rear motor periodics
-        switch (RobotMap.config) {
-            case 2:
+        drive.feedWatchdog();
                 TalonFXleftRearMotor.periodic();
                 TalonFXrightRearMotor.periodic();
                 TalonFXleftMotor.periodic();
                 TalonFXrightMotor.periodic();
-                break;
-            case 1:
-                leftMotor.periodic();
-                rightMotor.periodic();
-                break;
-            case 0:
-                leftMotor.periodic();
-                rightMotor.periodic();
-                // Set Romi Yellow Light to turn off and on in a 2 second cycle/
-                // Every other second the light is on.
-                int x = (int) timer.get();
-                romiIO.setYellowLight((x % 2 == 0));
-                break;
-        }
+
     }
 }

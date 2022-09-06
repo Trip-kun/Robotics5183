@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 public class RobotMap {
     /*
     Config 0: Romi Robot
-    Config 1: MS Paint Robot
+    Config 1: RIP SCRAPBOT
     config 2: Steve Robot
      */
     public static final int config = 2;
@@ -20,19 +20,17 @@ public class RobotMap {
     public static final int LowerLeftMotor=5;
     public static final int LowerRightMotor=4;
 
-    //RPM, INCHES
+    //Gear Ratios, INCHES
     public static final double TalonGearbox=5.95;
     public static final int TalonDiameter = 6;
-    // These are for Spark motors.
-    public static final int leftMotor=1;
-    public static final int rightMotor=2;
 
     public static final int spoolMotor=9;
     public static final int rotatorMotor=6;
     public static final int leftShooterMotor=8;
     public static final int rightShooterMotor=7;
 
-
     public static final int ControllerNumber=0;
     public static final int Controller2Number=1;
+
+    public static final double MaxSpeed=0.60;
 }

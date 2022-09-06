@@ -3,9 +3,6 @@ package frc.robot.subsystem.hardware;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import frc.robot.Util;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 public class SPIGyroscope {
     ADXRS450_Gyro gyro;
 

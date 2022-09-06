@@ -7,18 +7,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.commands.MoveDriveTrainByDistance;
-import frc.robot.commands.TurnDriveTrain;
-import frc.robot.commands.TurnModes;
-import frc.robot.subsystem.DriveTrain;
-import frc.robot.subsystem.LiftSpool;
-import frc.robot.subsystem.Shooter;
-import frc.robot.subsystem.ShooterRotator;
-import frc.robot.subsystem.hardware.RomiInputOutput;
+import frc.robot.subsystem.*;
 import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.SparkMotor;
 import frc.robot.subsystem.hardware.TalonFXMotor;
@@ -36,6 +28,7 @@ public class Robot extends TimedRobot
     LiftSpool liftSpool;
     ShooterRotator shooterRotator;
     Shooter shooter;
+    ControllerManager controllerManager=new ControllerManager();
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -43,22 +36,12 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        switch (RobotMap.config) {
-            case 2:
-                driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), new XboxController(RobotMap.ControllerNumber), new SPIGyroscope(new ADXRS450_Gyro()));
-                liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), new XboxController(RobotMap.Controller2Number));
-                shooterRotator = new ShooterRotator(new SparkMotor(RobotMap.rotatorMotor), new XboxController(RobotMap.Controller2Number));
-                shooter=new Shooter(new SparkMotor(RobotMap.leftShooterMotor),new SparkMotor( RobotMap.rightShooterMotor), new XboxController(RobotMap.Controller2Number));
-                driveTrain.gyroscope.calibrate();
-                break;
-            case 1:
-                driveTrain = new DriveTrain(new SparkMotor(RobotMap.leftMotor), new SparkMotor(RobotMap.rightMotor), new XboxController(RobotMap.ControllerNumber), new RomiInputOutput());
-                break;
-            case 0:
-                driveTrain = new DriveTrain(new SparkMotor(RobotMap.leftMotor), new SparkMotor(RobotMap.rightMotor), new XboxController(RobotMap.ControllerNumber));
-                break;
-        }
-
+        controllerManager.init();
+        driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
+        liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), controllerManager.getSecondController());
+        shooterRotator = new ShooterRotator(new SparkMotor(RobotMap.rotatorMotor), controllerManager.getSecondController());
+        shooter=new Shooter(new SparkMotor(RobotMap.leftShooterMotor),new SparkMotor( RobotMap.rightShooterMotor), controllerManager.getSecondController());
+        driveTrain.gyroscope.calibrate();
 
 
     }
