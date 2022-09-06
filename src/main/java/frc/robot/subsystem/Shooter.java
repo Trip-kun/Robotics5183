@@ -17,10 +17,10 @@ public class Shooter extends Subsystem {
     public void Drive() {
         double speed = 0;
         if(xbox.getXButton()==true) {
-            speed=-0.80;
+            speed=-0.75;
         }
         if (xbox.getAButton()==true) {
-            speed=0.80;
+            speed=0.75;
         }
         if(xbox.getYButton()==true) {
             speed = -0.45;

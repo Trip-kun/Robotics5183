@@ -13,6 +13,7 @@ public class MoveDriveTrainByDistance extends Command {
     private double distance;
     // Is Movement Forwards or Backwards? True is forwards
     private boolean Forwards;
+    private boolean secondRun;
     private Command endCommand;
     private DriveTrain driveTrain;
     private Scheduler scheduler = Scheduler.getInstance();
@@ -28,22 +29,27 @@ public class MoveDriveTrainByDistance extends Command {
     @Override
     public void start() {
         timer.start(); startTime=timer.getFPGATimestamp();
+        secondRun=false;
     }
     double count = 0;
     @Override
     public void execute() {
-      //  driveTrain.TalonFXleftMotor.set(MaxSpeed);
-       // driveTrain.TalonFXrightMotor.set(MaxSpeed);
+        driveTrain.TalonFXleftMotor.set(MaxSpeed);
+        driveTrain.TalonFXrightMotor.set(MaxSpeed);
         driveTrain.ArcadeDriveAutonomous(true, MaxSpeed, 0);
         count+=0.02;
+        if (!secondRun) {
+            driveTrain.TalonFXrightMotor.getRawMotor().getSensorCollection().setIntegratedSensorPosition(0, 200);
+        }
+
         double distanceUnits=Math.abs(driveTrain.TalonFXrightMotor.getRawMotor().getSensorCollection().getIntegratedSensorPosition());
         double distanceRotations=distanceUnits/2048;
         double distanceRadians=distanceRotations*2*Math.PI;
         double distanceRadiansAfterGearbox=distanceRadians/ RobotMap.TalonGearbox;
         double distanceNeeded = distanceRadiansAfterGearbox*RobotMap.TalonDiameter/2;
-        double distancePrecision= ( (int) (distanceNeeded*10))/10;
+        double distancePrecision= ( (int) (distanceNeeded*100))/100;
 
-        /*
+
         if (distancePrecision>=distance ) {
             driveTrain.TalonFXleftMotor.set(0.0);
             driveTrain.TalonFXrightMotor.set(0.0);
@@ -59,8 +65,7 @@ public class MoveDriveTrainByDistance extends Command {
             isFinished=true;
             scheduler.add(endCommand);
         }
-
-*/
+        /*
         double offset=8;
         if (count<=offset) {
             driveTrain.TalonFXleftMotor.set(0.0);
@@ -82,6 +87,7 @@ public class MoveDriveTrainByDistance extends Command {
 
         If not, set the motors to max speed or lower according to the distance left to go.
          */
+        secondRun=true;
    }
     @Override
     protected boolean isFinished() {

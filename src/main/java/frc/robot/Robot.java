@@ -94,7 +94,7 @@ public class Robot extends TimedRobot
 
         //Command command2 = new TurnDriveTrain(TurnModes.RELATIVE, -45, driveTrain, 0.25, new InstantCommand());          ;
         //scheduler.add(new TurnDriveTrain(TurnModes.RELATIVE, 270, driveTrain, 0.25, command2));
-        scheduler.add(new MoveDriveTrainByDistance(-1.0, 48, false, driveTrain, new InstantCommand()));
+        scheduler.add(new MoveDriveTrainByDistance(0.5, 12*3, true, driveTrain, new InstantCommand()));
     }
 
     /** This method is called periodically during autonomous. */
