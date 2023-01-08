@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.RobotMap;
-import frc.robot.subsystem.DriveTrain;
+import frc.robot.subsystem.FalconDriveTrain;
+import frc.robot.subsystem.GenericDriveTrain;
 
 public class MoveDriveTrainByDistance extends Command {
     // Max Speed of Motors.
@@ -15,15 +16,15 @@ public class MoveDriveTrainByDistance extends Command {
     private boolean Forwards;
     private boolean secondRun;
     private Command endCommand;
-    private DriveTrain driveTrain;
+    private GenericDriveTrain falconDriveTrain;
     private Scheduler scheduler = Scheduler.getInstance();
     private Timer timer = new Timer();
     // Distance Already Moved
     private boolean isFinished = false;
-    public MoveDriveTrainByDistance(double max_speed, double Distance, boolean forwards, DriveTrain drivetrain, Command command) {
+    public MoveDriveTrainByDistance(double max_speed, double Distance, boolean forwards, GenericDriveTrain drivetrain, Command command) {
         MaxSpeed=max_speed; distance=Distance; Forwards=forwards; endCommand=command;
         requires(drivetrain);
-        driveTrain=drivetrain;
+        falconDriveTrain =drivetrain;
     }
     double startTime;
     @Override
@@ -34,15 +35,16 @@ public class MoveDriveTrainByDistance extends Command {
     double count = 0;
     @Override
     public void execute() {
-        driveTrain.TalonFXleftMotor.set(MaxSpeed);
-        driveTrain.TalonFXrightMotor.set(MaxSpeed);
-        driveTrain.ArcadeDriveAutonomous(true, MaxSpeed, 0);
+        falconDriveTrain.leftMotor.set(MaxSpeed);
+        falconDriveTrain.rightMotor.set(MaxSpeed);
+        falconDriveTrain.ArcadeDriveAutonomous(true, MaxSpeed, 0);
         count+=0.02;
         if (!secondRun) {
-            driveTrain.TalonFXrightMotor.getRawMotor().getSensorCollection().setIntegratedSensorPosition(0, 200);
+            //falconDriveTrain.rightMotor.getRawMotor().getSensorCollection().setIntegratedSensorPosition(0, 200);
         }
 
-        double distanceUnits=Math.abs(driveTrain.TalonFXrightMotor.getRawMotor().getSensorCollection().getIntegratedSensorPosition());
+        //double distanceUnits=Math.abs(falconDriveTrain.rightMotor.getRawMotor().getSensorCollection().getIntegratedSensorPosition());
+        double distanceUnits=0;
         double distanceRotations=distanceUnits/2048;
         double distanceRadians=distanceRotations*2*Math.PI;
         double distanceRadiansAfterGearbox=distanceRadians/ RobotMap.TalonGearbox;
@@ -51,8 +53,8 @@ public class MoveDriveTrainByDistance extends Command {
 
 
         if (distancePrecision>=distance ) {
-            driveTrain.TalonFXleftMotor.set(0.0);
-            driveTrain.TalonFXrightMotor.set(0.0);
+            falconDriveTrain.leftMotor.set(0.0);
+            falconDriveTrain.rightMotor.set(0.0);
 
 
 
@@ -68,13 +70,13 @@ public class MoveDriveTrainByDistance extends Command {
         /*
         double offset=8;
         if (count<=offset) {
-            driveTrain.TalonFXleftMotor.set(0.0);
-            driveTrain.TalonFXrightMotor.set(0.0);
+            driveTrain.leftMotor.set(0.0);
+            driveTrain.rightMotor.set(0.0);
         }
         if (count>=2.5+offset) {
             System.out.println("FINISHED");
-            driveTrain.TalonFXleftMotor.set(0.0);
-            driveTrain.TalonFXrightMotor.set(0.0);
+            driveTrain.leftMotor.set(0.0);
+            driveTrain.rightMotor.set(0.0);
             isFinished=true;
             scheduler.add(endCommand);
         }

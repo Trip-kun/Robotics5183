@@ -13,7 +13,7 @@ import frc.robot.commands.MoveDriveTrainByDistance;
 import frc.robot.subsystem.*;
 import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.SparkMotor;
-import frc.robot.subsystem.hardware.TalonFXMotor;
+import frc.robot.subsystem.hardware.SparkMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -24,11 +24,11 @@ import frc.robot.subsystem.hardware.TalonFXMotor;
 public class Robot extends TimedRobot
 {
     public Scheduler scheduler = Scheduler.getInstance();
-    DriveTrain driveTrain;
-    LiftSpool liftSpool;
+    GenericDriveTrain driveTrain;
+
     ShooterRotator shooterRotator;
     Shooter shooter;
-    ControllerManager controllerManager=new ControllerManager();
+    ControllerManager controllerManager=RobotMap.controllerManager;
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -37,11 +37,10 @@ public class Robot extends TimedRobot
     public void robotInit()
     {
         controllerManager.init();
-        driveTrain = new DriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
-        liftSpool = new LiftSpool(new SparkMotor(RobotMap.spoolMotor), controllerManager.getSecondController());
+        driveTrain = new GenericDriveTrain(new SparkMotor(RobotMap.UpperLeftMotor), new SparkMotor(RobotMap.UpperRightMotor), new SparkMotor(RobotMap.LowerLeftMotor), new SparkMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
         shooterRotator = new ShooterRotator(new SparkMotor(RobotMap.rotatorMotor), controllerManager.getSecondController());
         shooter=new Shooter(new SparkMotor(RobotMap.leftShooterMotor),new SparkMotor( RobotMap.rightShooterMotor), controllerManager.getSecondController());
-        driveTrain.gyroscope.calibrate();
+        driveTrain.gyro.calibrate();
 
 
     }
@@ -56,7 +55,6 @@ public class Robot extends TimedRobot
     @Override
     public void robotPeriodic() {
         driveTrain.periodic();
-        liftSpool.periodic();
         shooterRotator.periodic();
         shooter.periodic();
     }
@@ -95,7 +93,6 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() {
         driveTrain.ArcadeDrive(true);
-        liftSpool.Drive();
         shooterRotator.teleop();
         shooter.Drive();
     }

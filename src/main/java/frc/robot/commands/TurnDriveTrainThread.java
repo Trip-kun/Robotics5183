@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
 import frc.robot.Util;
-import frc.robot.subsystem.DriveTrain;
+import frc.robot.subsystem.FalconDriveTrain;
 
 import static frc.robot.commands.Direction.CLOCKWISE;
 import static frc.robot.commands.Direction.COUNTERCLOCKWISE;
 
 public class TurnDriveTrainThread extends Thread {
-    public DriveTrain driveTrain;
+    public FalconDriveTrain falconDriveTrain;
     public double newAngle;
     public Direction direction;
     public double MaxSpeed;
     public double t;
-    public TurnDriveTrainThread(DriveTrain drivetrain, double newangle, Direction dir, double maxSpeed, double T) {
-        driveTrain = drivetrain;
+    public TurnDriveTrainThread(FalconDriveTrain drivetrain, double newangle, Direction dir, double maxSpeed, double T) {
+        falconDriveTrain = drivetrain;
         newAngle = newangle;
         direction = dir;
         MaxSpeed = maxSpeed;
@@ -23,7 +23,7 @@ public class TurnDriveTrainThread extends Thread {
     @Override
     public void run() {
         while (true) {
-            double currentAngle = driveTrain.gyroscope.getAngle();
+            double currentAngle = falconDriveTrain.gyroscope.getAngle();
             double x = Util.normalize_angle_degrees(newAngle - currentAngle);
             double y = x - 360;
             double AbsX = Math.abs(x);
@@ -61,19 +61,19 @@ public class TurnDriveTrainThread extends Thread {
                 double speed = Math.max(0.01, MaxSpeed);
                 switch (direction) {
                     case CLOCKWISE:
-                        driveTrain.leftMotor.set(-speed);
-                        driveTrain.rightMotor.set(-speed);
+                        falconDriveTrain.leftMotor.set(-speed);
+                        falconDriveTrain.rightMotor.set(-speed);
                         break;
                     case COUNTERCLOCKWISE:
-                        driveTrain.leftMotor.set(speed);
-                        driveTrain.rightMotor.set(speed);
+                        falconDriveTrain.leftMotor.set(speed);
+                        falconDriveTrain.rightMotor.set(speed);
 
                         break;
                 }
             }
             if (currentAngle == newAngle && MaxSpeed <= 0.1) {
-                driveTrain.leftMotor.set(0);
-                driveTrain.rightMotor.set(0);
+                falconDriveTrain.leftMotor.set(0);
+                falconDriveTrain.rightMotor.set(0);
                 break;
             }
         }
