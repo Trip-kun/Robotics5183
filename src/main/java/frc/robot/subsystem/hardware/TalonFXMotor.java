@@ -2,7 +2,7 @@ package frc.robot.subsystem.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-public class TalonFXMotor {
+public class TalonFXMotor extends Motor {
     private WPI_TalonFX talonMotor;
 
     public TalonFXMotor(int id) {
@@ -11,6 +11,11 @@ public class TalonFXMotor {
 
     public void set(double speed) {
         talonMotor.set(speed);
+    }
+
+    @Override
+    public void setVoltage(double outputVolts) {
+        talonMotor.setVoltage(outputVolts);
     }
 
     public WPI_TalonFX getRawMotor() {
@@ -35,6 +40,16 @@ public class TalonFXMotor {
 
     public boolean getInverted() {
         return talonMotor.getInverted();
+    }
+
+    @Override
+    public void disable() {
+        talonMotor.disable();
+    }
+
+    @Override
+    public void stopMotor() {
+        talonMotor.stopMotor();
     }
 
 }

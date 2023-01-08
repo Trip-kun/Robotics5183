@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Util;
-import frc.robot.subsystem.DriveTrain;
+import frc.robot.subsystem.FalconDriveTrain;
 
 import static frc.robot.commands.Direction.CLOCKWISE;
 import static frc.robot.commands.Direction.COUNTERCLOCKWISE;
@@ -20,15 +20,15 @@ public class TurnDriveTrain extends Command {
     Command endCommand = null;
     private boolean is_finished = false;
     private Direction direction;
-    private DriveTrain driveTrain;
+    private FalconDriveTrain falconDriveTrain;
     private double MaxSpeed = 1;
     private boolean started = false;
     TurnDriveTrainThread driveTrainThread;
     private Scheduler scheduler = Scheduler.getInstance();
-    public TurnDriveTrain(TurnModes mode, double new_angle, DriveTrain drivetrain, double maxSpeed, Command command) {
+    public TurnDriveTrain(TurnModes mode, double new_angle, FalconDriveTrain drivetrain, double maxSpeed, Command command) {
         requires(drivetrain);
         endCommand = command;
-        driveTrain = drivetrain;
+        falconDriveTrain = drivetrain;
         startingAngle = Util.normalize_angle_degrees(drivetrain.gyroscope.getAngle());
         MaxSpeed = maxSpeed;
         switch (mode) {

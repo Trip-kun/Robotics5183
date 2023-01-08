@@ -2,7 +2,7 @@ package frc.robot.subsystem.hardware;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
-public class SparkMotor {
+public class SparkMotor extends Motor {
     private Spark sparkMotor;
 
     public SparkMotor(int port) {
@@ -11,6 +11,11 @@ public class SparkMotor {
 
     public void set(double speed) {
         sparkMotor.set(speed);
+    }
+
+    @Override
+    public void setVoltage(double outputVolts) {
+        sparkMotor.setVoltage(outputVolts);
     }
 
     public void periodic() {
@@ -31,6 +36,16 @@ public class SparkMotor {
 
     public boolean getInverted() {
         return sparkMotor.getInverted();
+    }
+
+    @Override
+    public void disable() {
+        sparkMotor.disable();
+    }
+
+    @Override
+    public void stopMotor() {
+        sparkMotor.disable();
     }
 
     public Spark getRawMotor() {
