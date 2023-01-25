@@ -2,7 +2,7 @@ package frc.robot.subsystem.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-public class TalonFXMotor extends Motor {
+public class TalonFXMotor extends PhoenixMotor {
     private WPI_TalonFX talonMotor;
 
     public TalonFXMotor(int id) {
@@ -21,6 +21,7 @@ public class TalonFXMotor extends Motor {
     public WPI_TalonFX getRawMotor() {
         return talonMotor;
     }
+    public WPI_TalonFX getRawMasterMotor() { return talonMotor;}
 
     public void periodic() {
         talonMotor.feed();
@@ -51,5 +52,7 @@ public class TalonFXMotor extends Motor {
     public void stopMotor() {
         talonMotor.stopMotor();
     }
+
+
 
 }
