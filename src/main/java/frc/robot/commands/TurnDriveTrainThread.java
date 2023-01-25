@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
 import frc.robot.Util;
-import frc.robot.subsystem.FalconDriveTrain;
+import frc.robot.subsystem.PhoenixDriveTrain;
 
 import static frc.robot.commands.Direction.CLOCKWISE;
 import static frc.robot.commands.Direction.COUNTERCLOCKWISE;
-
+@Deprecated
 public class TurnDriveTrainThread extends Thread {
-    public FalconDriveTrain falconDriveTrain;
+    public PhoenixDriveTrain phoenixDriveTrain;
     public double newAngle;
     public Direction direction;
     public double MaxSpeed;
     public double t;
-    public TurnDriveTrainThread(FalconDriveTrain drivetrain, double newangle, Direction dir, double maxSpeed, double T) {
-        falconDriveTrain = drivetrain;
+    public TurnDriveTrainThread(PhoenixDriveTrain drivetrain, double newangle, Direction dir, double maxSpeed, double T) {
+        phoenixDriveTrain = drivetrain;
         newAngle = newangle;
         direction = dir;
         MaxSpeed = maxSpeed;
@@ -23,7 +23,7 @@ public class TurnDriveTrainThread extends Thread {
     @Override
     public void run() {
         while (true) {
-            double currentAngle = falconDriveTrain.gyroscope.getAngle();
+            double currentAngle = phoenixDriveTrain.gyroscope.getAngle();
             double x = Util.normalize_angle_degrees(newAngle - currentAngle);
             double y = x - 360;
             double AbsX = Math.abs(x);
@@ -61,19 +61,19 @@ public class TurnDriveTrainThread extends Thread {
                 double speed = Math.max(0.01, MaxSpeed);
                 switch (direction) {
                     case CLOCKWISE:
-                        falconDriveTrain.leftMotor.set(-speed);
-                        falconDriveTrain.rightMotor.set(-speed);
+                       // phoenixDriveTrain.LeftMotor.set(-speed);
+                       // phoenixDriveTrain.RightMotor.set(-speed);
                         break;
                     case COUNTERCLOCKWISE:
-                        falconDriveTrain.leftMotor.set(speed);
-                        falconDriveTrain.rightMotor.set(speed);
+                       // phoenixDriveTrain.LeftMotor.set(speed);
+                       // phoenixDriveTrain.RightMotor.set(speed);
 
                         break;
                 }
             }
             if (currentAngle == newAngle && MaxSpeed <= 0.1) {
-                falconDriveTrain.leftMotor.set(0);
-                falconDriveTrain.rightMotor.set(0);
+                //phoenixDriveTrain.LeftMotor.set(0);
+                //phoenixDriveTrain.RightMotor.set(0);
                 break;
             }
         }

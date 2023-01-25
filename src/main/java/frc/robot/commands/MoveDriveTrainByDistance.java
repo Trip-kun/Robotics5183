@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.RobotMap;
-import frc.robot.subsystem.FalconDriveTrain;
 import frc.robot.subsystem.GenericDriveTrain;
 
 public class MoveDriveTrainByDistance extends Command {
@@ -40,10 +39,10 @@ public class MoveDriveTrainByDistance extends Command {
         falconDriveTrain.ArcadeDriveAutonomous(true, MaxSpeed, 0);
         count+=0.02;
         if (!secondRun) {
-            //falconDriveTrain.rightMotor.getRawMotor().getSensorCollection().setIntegratedSensorPosition(0, 200);
+            //phoenixDriveTrain.rightMotor.getRawMotor().getSensorCollection().setIntegratedSensorPosition(0, 200);
         }
 
-        //double distanceUnits=Math.abs(falconDriveTrain.rightMotor.getRawMotor().getSensorCollection().getIntegratedSensorPosition());
+        //double distanceUnits=Math.abs(phoenixDriveTrain.rightMotor.getRawMotor().getSensorCollection().getIntegratedSensorPosition());
         double distanceUnits=0;
         double distanceRotations=distanceUnits/2048;
         double distanceRadians=distanceRotations*2*Math.PI;
