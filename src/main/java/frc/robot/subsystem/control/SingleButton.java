@@ -25,7 +25,7 @@ public class SingleButton extends SingleControlStyle {
             case Set:
                 if (lastState==true && buttonVal==false) {
                     swapped=!swapped;
-                    lastState=buttonVal;
+                    lastState= false;
                 }
                 if (swapped) {
                     return pressed;

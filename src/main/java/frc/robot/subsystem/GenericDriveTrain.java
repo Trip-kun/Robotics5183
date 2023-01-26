@@ -57,8 +57,6 @@ public class GenericDriveTrain extends Subsystem {
 
     public void periodic() {
 
-        // In all Robot Configs run left and right motor periodics
-        // In STEVE run rear motor periodics
         drive.feedWatchdog();
         leftMotor.periodic();
         rightMotor.periodic();
