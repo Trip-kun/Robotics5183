@@ -22,12 +22,7 @@ public abstract class PhoenixMotor extends Motor {
     public double get() {
         return motor.getMotorOutputPercent();
     }
-    public void setInverted(boolean inverted) {
-        motor.setInverted(inverted);
-    }
-    public void setInverted(InvertType inverted) {
-        motor.setInverted(inverted);
-    }
+
     public boolean getInverted() {
         return motor.getInverted();
     }

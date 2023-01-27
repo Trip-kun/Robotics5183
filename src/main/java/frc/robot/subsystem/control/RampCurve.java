@@ -22,7 +22,7 @@ public class RampCurve {
                 if (Math.abs(x)<deadZone) {
                     return 0;
                 } else {
-                    return (Util.getSign(x)*Math.pow(1+exaggeration, x)-1)/exaggeration;
+                    return ((x/Math.abs(x))*Math.pow(1+exaggeration, Math.abs(x))-1)/exaggeration;
                 }
             default:
                 return 0;

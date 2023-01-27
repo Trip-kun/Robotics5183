@@ -1,12 +1,16 @@
 package frc.robot.subsystem.hardware;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class VictorSPXMotor extends PhoenixMotor {
 
     WPI_VictorSPX motor;
     public VictorSPXMotor(int id) {
+
+
         motor = new WPI_VictorSPX(id);
+        super.motor=motor;
     }
     public void setVoltage(double outputVolts) {
         motor.setVoltage(outputVolts);
@@ -30,5 +34,11 @@ public class VictorSPXMotor extends PhoenixMotor {
     @Override
     public void stopMotor() {
         motor.stopMotor();
+    }
+    public void setInverted(boolean inverted) {
+        motor.setInverted(inverted);
+    }
+    public void setInverted(InvertType inverted) {
+        motor.setInverted(inverted);
     }
 }

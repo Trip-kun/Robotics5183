@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 
 import frc.robot.subsystem.*;
 import frc.robot.subsystem.hardware.SPIGyroscope;
-import frc.robot.subsystem.hardware.SparkMotor;
+import frc.robot.subsystem.hardware.VictorSPXMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -20,7 +20,7 @@ import frc.robot.subsystem.hardware.SparkMotor;
  */
 public class Robot extends TimedRobot
 {
-    GenericDriveTrain driveTrain;
+    PhoenixDriveTrain driveTrain;
 
     ControllerManager controllerManager=RobotMap.controllerManager;
     /**
@@ -30,8 +30,8 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        driveTrain = new GenericDriveTrain(new SparkMotor(RobotMap.UpperLeftMotor), new SparkMotor(RobotMap.UpperRightMotor), new SparkMotor(RobotMap.LowerLeftMotor), new SparkMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
-        driveTrain.gyro.calibrate();
+        driveTrain = new PhoenixDriveTrain(new VictorSPXMotor(RobotMap.UpperLeftMotor), new VictorSPXMotor(RobotMap.UpperRightMotor), new VictorSPXMotor(RobotMap.LowerLeftMotor), new VictorSPXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
+        //driveTrain.gyro.calibrate();
 
 
     }
