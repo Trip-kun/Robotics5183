@@ -1,7 +1,7 @@
 package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Tuple2;
@@ -9,7 +9,7 @@ import frc.robot.subsystem.hardware.Motor;
 import frc.robot.subsystem.hardware.MotorGroup;
 import frc.robot.subsystem.hardware.SPIGyroscope;
 
-public class GenericDriveTrain extends Subsystem {
+public class GenericDriveTrain {
     public DifferentialDrive drive;
     public SPIGyroscope gyro;
     public Motor leftMotor;
@@ -50,7 +50,7 @@ public class GenericDriveTrain extends Subsystem {
         // arcadeDrive function. No need to use motor SET function.
         drive.arcadeDrive(x*RobotMap.MaxSpeed, y*RobotMap.MaxSpeed, squared);
     }
-    @Override
+
     protected void initDefaultCommand() {
 
     }

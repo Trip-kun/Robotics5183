@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Tuple2;
@@ -12,7 +11,7 @@ import frc.robot.subsystem.hardware.SPIGyroscope;
 import frc.robot.subsystem.hardware.SparkMotor;
 import frc.robot.subsystem.hardware.PhoenixMotor;
 
-public class PhoenixDriveTrain extends Subsystem {
+public class PhoenixDriveTrain {
     public DifferentialDrive drive;
     public PhoenixMotor PhoenixLeftMotor;
     public PhoenixMotor PhoenixRightMotor;
@@ -81,7 +80,7 @@ public class PhoenixDriveTrain extends Subsystem {
         // arcadeDrive function. No need to use motor SET function.
         drive.arcadeDrive(x*RobotMap.MaxSpeed, y*RobotMap.MaxSpeed, squared);
     }
-    @Override
+
     protected void initDefaultCommand() {
 
     }

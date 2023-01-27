@@ -7,12 +7,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.robot.commands.MoveDriveTrainByDistance;
+
 import frc.robot.subsystem.*;
 import frc.robot.subsystem.hardware.SPIGyroscope;
-import frc.robot.subsystem.hardware.SparkMotor;
 import frc.robot.subsystem.hardware.SparkMotor;
 
 /**
@@ -23,11 +20,8 @@ import frc.robot.subsystem.hardware.SparkMotor;
  */
 public class Robot extends TimedRobot
 {
-    public Scheduler scheduler = Scheduler.getInstance();
     GenericDriveTrain driveTrain;
 
-    ShooterRotator shooterRotator;
-    Shooter shooter;
     ControllerManager controllerManager=RobotMap.controllerManager;
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -36,10 +30,7 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        controllerManager.init();
         driveTrain = new GenericDriveTrain(new SparkMotor(RobotMap.UpperLeftMotor), new SparkMotor(RobotMap.UpperRightMotor), new SparkMotor(RobotMap.LowerLeftMotor), new SparkMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
-        shooterRotator = new ShooterRotator(new SparkMotor(RobotMap.rotatorMotor), controllerManager.getSecondController());
-        shooter=new Shooter(new SparkMotor(RobotMap.leftShooterMotor),new SparkMotor( RobotMap.rightShooterMotor), controllerManager.getSecondController());
         driveTrain.gyro.calibrate();
 
 
@@ -55,8 +46,6 @@ public class Robot extends TimedRobot
     @Override
     public void robotPeriodic() {
         driveTrain.periodic();
-        shooterRotator.periodic();
-        shooter.periodic();
     }
 
     /**
@@ -73,16 +62,13 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
 
-        //Command command2 = new TurnDriveTrain(TurnModes.RELATIVE, -45, driveTrain, 0.25, new InstantCommand());          ;
-        //scheduler.add(new TurnDriveTrain(TurnModes.RELATIVE, 270, driveTrain, 0.25, command2));
-        scheduler.add(new MoveDriveTrainByDistance(0.5, 12*3, true, driveTrain, new InstantCommand()));
-    }
+       }
 
     /** This method is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic()
     {
-        scheduler.run();
+
     }
 
     /** This function is called once when teleop is enabled. */
@@ -93,8 +79,6 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() {
         driveTrain.ArcadeDrive(true);
-        shooterRotator.teleop();
-        shooter.Drive();
     }
 
     /** This function is called once when the robot is disabled. */
