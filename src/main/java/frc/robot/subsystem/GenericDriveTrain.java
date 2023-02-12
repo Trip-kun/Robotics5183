@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Tuple2;
-import frc.robot.subsystem.hardware.Motor;
-import frc.robot.subsystem.hardware.MotorGroup;
-import frc.robot.subsystem.hardware.SPIGyroscope;
+import frc.robot.hardware.motor.Motor;
+import frc.robot.hardware.motor.MotorGroup;
+import frc.robot.hardware.SPIGyroscope;
 
 public class GenericDriveTrain {
     public DifferentialDrive drive;

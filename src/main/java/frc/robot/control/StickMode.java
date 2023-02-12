@@ -1,4 +1,4 @@
-package frc.robot.subsystem.control;
+package frc.robot.control;
 
 
 public enum StickMode {

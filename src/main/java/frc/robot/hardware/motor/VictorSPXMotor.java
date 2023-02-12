@@ -1,4 +1,4 @@
-package frc.robot.subsystem.hardware;
+package frc.robot.hardware.motor;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 

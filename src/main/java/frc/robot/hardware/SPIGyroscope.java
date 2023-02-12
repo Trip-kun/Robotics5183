@@ -1,4 +1,4 @@
-package frc.robot.subsystem.hardware;
+package frc.robot.hardware;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import frc.robot.Util;

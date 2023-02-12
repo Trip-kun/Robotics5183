@@ -1,15 +1,13 @@
 package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Tuple2;
-import frc.robot.subsystem.hardware.SPIGyroscope;
-import frc.robot.subsystem.hardware.SparkMotor;
-import frc.robot.subsystem.hardware.PhoenixMotor;
+import frc.robot.hardware.SPIGyroscope;
+import frc.robot.hardware.motor.PhoenixMotor;
 
 public class PhoenixDriveTrain {
     public DifferentialDrive drive;

@@ -1,10 +1,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import frc.robot.subsystem.ControllerManager;
-import frc.robot.subsystem.control.FullStick;
-import frc.robot.subsystem.control.RampCurve;
-import frc.robot.subsystem.control.StickMode;
+import frc.robot.control.FullStick;
+import frc.robot.control.RampCurve;
+import frc.robot.control.StickMode;
 
 public class RobotMap {
 

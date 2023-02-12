@@ -1,7 +1,6 @@
-package frc.robot.subsystem.control;
+package frc.robot.control;
 
 
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Util;
 
 public class RampCurve {

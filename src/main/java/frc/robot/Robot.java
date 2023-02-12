@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import frc.robot.subsystem.*;
-import frc.robot.subsystem.hardware.SPIGyroscope;
-import frc.robot.subsystem.hardware.SparkMotor;
+import frc.robot.hardware.SPIGyroscope;
+import frc.robot.hardware.motor.SparkMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
