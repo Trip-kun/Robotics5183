@@ -1,7 +1,10 @@
-package frc.robot.control;
+package frc.robot.control.single;
 
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.control.RampCurve;
+import frc.robot.control.StickMode;
+import frc.robot.control.single.SingleControlStyle;
 
 public class HalfStick extends SingleControlStyle {
     private RampCurve curve= new RampCurve(RampCurve.Curve.Linear);

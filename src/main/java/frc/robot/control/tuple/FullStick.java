@@ -1,9 +1,12 @@
-package frc.robot.control;
+package frc.robot.control.tuple;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Tuple2;
+import frc.robot.control.RampCurve;
+import frc.robot.control.StickMode;
+import frc.robot.control.tuple.DoubleControlStyle;
 
-public class FullStick extends DoubleControlStyle{
+public class FullStick extends DoubleControlStyle {
     private RampCurve xCurve=new RampCurve(RampCurve.Curve.Linear);
     private RampCurve yCurve = new RampCurve(RampCurve.Curve.Linear);
     private StickMode xMode;

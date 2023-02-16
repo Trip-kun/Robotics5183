@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Tuple2;
+import frc.robot.control.tuple.DoubleControlStyle;
 import frc.robot.hardware.SPIGyroscope;
 import frc.robot.hardware.motor.PhoenixMotor;
 
@@ -18,10 +19,12 @@ public class PhoenixDriveTrain {
     public XboxController xbox;
     public Timer timer = new Timer();
     public SPIGyroscope gyroscope;
+    public DoubleControlStyle controlStyle;
 
-    public PhoenixDriveTrain(PhoenixMotor lm, PhoenixMotor rm, PhoenixMotor lrm, PhoenixMotor rrm, XboxController xbx,
-                             SPIGyroscope gyro) {
+    public PhoenixDriveTrain(PhoenixMotor lm, PhoenixMotor rm, PhoenixMotor lrm, PhoenixMotor rrm, XboxController xbx, SPIGyroscope gyro, DoubleControlStyle style) {
+
         // Assigning Values passed into constructor
+        controlStyle=style;
         PhoenixLeftMotor = lm;
         PhoenixRightMotor = rm;
         PhoenixLeftRearMotor = lrm;
@@ -66,7 +69,7 @@ public class PhoenixDriveTrain {
         rrm.getRawMasterMotor().setNeutralMode(NeutralMode.Coast);
     }
     public void ArcadeDrive(boolean squared) {
-        Tuple2<Double> control = RobotMap.driveTrainControl.getValue();
+        Tuple2<Double> control =controlStyle.getValue();
         drive.arcadeDrive(control.val2, control.val1, squared);
     }
 
@@ -76,13 +79,17 @@ public class PhoenixDriveTrain {
         // Grab Value of Left Bumper
         // In all Robot Configs pass values to the main DifferentialDrive for use in
         // arcadeDrive function. No need to use motor SET function.
-        drive.arcadeDrive(x*RobotMap.MaxSpeed, y*RobotMap.MaxSpeed, squared);
+        drive.arcadeDrive(x, y, squared);
     }
 
     protected void initDefaultCommand() {
 
     }
+    public void autonomous(DoubleControlStyle controlStyle) {
+        Tuple2<Double> control = controlStyle.getValue();
 
+        drive.arcadeDrive(control.val2, control.val1, true);
+    }
     public void periodic() {
 
         // In all Robot Configs run Left and Right motor periodics

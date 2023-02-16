@@ -6,11 +6,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.PneumaticsBase;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import frc.robot.subsystem.*;
 import frc.robot.hardware.SPIGyroscope;
-import frc.robot.hardware.motor.SparkMotor;
+import frc.robot.hardware.motor.VictorSPXMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -20,8 +22,8 @@ import frc.robot.hardware.motor.SparkMotor;
  */
 public class Robot extends TimedRobot
 {
-    GenericDriveTrain driveTrain;
-
+    PhoenixDriveTrain driveTrain;
+    PneumaticBase pneumaticBase;
     ControllerManager controllerManager=RobotMap.controllerManager;
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -30,9 +32,9 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        driveTrain = new GenericDriveTrain(new SparkMotor(RobotMap.UpperLeftMotor), new SparkMotor(RobotMap.UpperRightMotor), new SparkMotor(RobotMap.LowerLeftMotor), new SparkMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
-        driveTrain.gyro.calibrate();
-
+        driveTrain = new PhoenixDriveTrain(new VictorSPXMotor(RobotMap.UpperLeftMotor), new VictorSPXMotor(RobotMap.UpperRightMotor), new VictorSPXMotor(RobotMap.LowerLeftMotor), new VictorSPXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()), RobotMap.driveTrainControl);
+        driveTrain.gyroscope.calibrate();
+        pneumaticBase=new PneumaticBase(new PneumaticsControlModule(), RobotMap.compressorControl);
 
     }
 
@@ -78,7 +80,9 @@ public class Robot extends TimedRobot
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+
         driveTrain.ArcadeDrive(true);
+        pneumaticBase.teleop();
     }
 
     /** This function is called once when the robot is disabled. */

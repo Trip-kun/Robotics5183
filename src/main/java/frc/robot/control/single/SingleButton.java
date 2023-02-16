@@ -1,6 +1,8 @@
-package frc.robot.control;
+package frc.robot.control.single;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.control.Button;
+import frc.robot.control.ButtonStyle;
 
 public class SingleButton extends SingleControlStyle {
     private ButtonStyle style;
@@ -23,7 +25,7 @@ public class SingleButton extends SingleControlStyle {
                     return unpressed;
                 }
             case Set:
-                if (lastState==true && buttonVal==false) {
+                if (lastState && !buttonVal) {
                     swapped=!swapped;
                     lastState= false;
                 }

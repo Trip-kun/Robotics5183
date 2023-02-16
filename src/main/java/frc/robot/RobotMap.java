@@ -1,7 +1,10 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import frc.robot.control.FullStick;
+import frc.robot.control.Button;
+import frc.robot.control.ButtonStyle;
+import frc.robot.control.single.SingleButton;
+import frc.robot.control.tuple.FullStick;
 import frc.robot.control.RampCurve;
 import frc.robot.control.StickMode;
 
@@ -19,9 +22,12 @@ public class RobotMap {
 
     public static final ControllerManager controllerManager = new ControllerManager().init();
     public static final FullStick driveTrainControl=new FullStick(controllerManager.getFirstController(), StickMode.rightX,StickMode.leftY, new RampCurve(RampCurve.Curve.Exponential, 10.0, 0.09), new RampCurve(RampCurve.Curve.Exponential, 5.0, 0.09) );
+
+    public static final SingleButton compressorControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Switch, Button.RightBumper, 0, 1);
     //Gear Ratios, INCHES
     public static final double TalonGearbox=5.95;
     public static final int TalonDiameter = 6;
+
 
 
     public static final int ControllerNumber=0;
