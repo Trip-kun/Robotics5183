@@ -12,6 +12,7 @@ public class PneumaticBase extends Subsystem {
 
     public PneumaticBase(PneumaticsBase pneumaticsBase, SingleControlStyle controlStyle) {
         this.pneumaticsBase=pneumaticsBase;
+        compressor=new Compressor(pneumaticsBase);
         this.controlStyle=controlStyle;
     }
     private void control(SingleControlStyle controlStyle) {

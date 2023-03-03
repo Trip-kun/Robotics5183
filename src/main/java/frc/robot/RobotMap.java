@@ -14,20 +14,19 @@ public class RobotMap {
 
     // Basically Ethan's Code that I haven't taken the time to understand yet.
     public static SupplyCurrentLimitConfiguration driveCurrentLimit = new SupplyCurrentLimitConfiguration(true, 30, 0 , 0.2);
-    public static final double DRIVE_SPEED_RAMP=0.2;
+    public static final double DRIVE_SPEED_RAMP=0.0;
 
     // These are for FalconFX motors.
-    public static final int UpperLeftMotor=1;
-    public static final int UpperRightMotor=3;
-    public static final int LowerLeftMotor=2;
-    public static final int LowerRightMotor=0;
+    public static final int UpperLeftMotor=2;
+    public static final int UpperRightMotor=0;
+    public static final int LowerLeftMotor=1;
+    public static final int LowerRightMotor=3;
 
     public static final int armMotor=4;
 
     public static final ControllerManager controllerManager = new ControllerManager().init();
-    public static final FullStick driveTrainControl=new FullStick(controllerManager.getFirstController(), StickMode.rightX,StickMode.leftY, new RampCurve(RampCurve.Curve.Exponential, 10.0, 0.09), new RampCurve(RampCurve.Curve.Exponential, 5.0, 0.09) );
-
-    public static final CombinedDouble armControl = new CombinedDouble(new HalfStick(controllerManager.getSecondController(), StickMode.rightY), new HalfStick(controllerManager.getSecondController(), StickMode.hatY));
+    public static final FullStick driveTrainControl=new FullStick(controllerManager.getFirstController(), StickMode.rightX,StickMode.leftY, new RampCurve(RampCurve.Curve.Exponential, 300, 0.02), new RampCurve(RampCurve.Curve.Exponential, 300.0, 0.02) );
+     static final CombinedDouble armControl = new CombinedDouble(new HalfStick(controllerManager.getSecondController(), StickMode.rightY), new HalfStick(controllerManager.getSecondController(), StickMode.hatY));
     public static final SingleButton compressorControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Switch, Button.RightBumper, 0, 1);
     //Gear Ratios, INCHES
     public static final SingleButton clawControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Set, Button.A, 0, 1);
