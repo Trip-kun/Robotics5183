@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.PneumaticsBase;
 import frc.robot.control.single.SingleControlStyle;
 import frc.robot.hardware.pneumatic.Compressor;
 
-public class PneumaticBase {
+public class PneumaticBase extends Subsystem {
     private PneumaticsBase pneumaticsBase;
     public Compressor compressor;
     private SingleControlStyle controlStyle;
@@ -29,4 +29,5 @@ public class PneumaticBase {
     public void autonomous(SingleControlStyle controlStyle) {
         control(controlStyle);
     }
+    public void periodic() {}
 }

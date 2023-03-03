@@ -1,18 +1,21 @@
 package frc.robot.subsystem;
 
 import frc.robot.control.tuple.DoubleControlStyle;
+import frc.robot.hardware.encoder.Encoder;
 import frc.robot.hardware.motor.Motor;
 import frc.robot.hardware.pneumatic.DoubleSolenoid;
 
-public class Arm {
+public class Arm extends Subsystem {
     public Motor base;
     public DoubleSolenoid joint;
     DoubleControlStyle controlStyle;
+    public Encoder coder;
 
-    public Arm(Motor motorBase, DoubleSolenoid jointSolenoid, DoubleControlStyle style) {
+    public Arm(Motor motorBase, DoubleSolenoid jointSolenoid, DoubleControlStyle style, Encoder encoder) {
         base=motorBase;
         joint=jointSolenoid;
         controlStyle=style;
+        coder=encoder;
     }
 
     public void teleop() {
@@ -37,4 +40,7 @@ public class Arm {
         base.periodic();
     }
 
+    public DoubleControlStyle getControlStyle() {
+        return controlStyle;
+    }
 }

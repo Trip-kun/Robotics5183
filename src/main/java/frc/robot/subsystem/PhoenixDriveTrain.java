@@ -8,9 +8,10 @@ import frc.robot.RobotMap;
 import frc.robot.Tuple2;
 import frc.robot.control.tuple.DoubleControlStyle;
 import frc.robot.hardware.SPIGyroscope;
+import frc.robot.hardware.encoder.Encoder;
 import frc.robot.hardware.motor.PhoenixMotor;
 
-public class PhoenixDriveTrain {
+public class PhoenixDriveTrain extends Subsystem {
     public DifferentialDrive drive;
     public PhoenixMotor PhoenixLeftMotor;
     public PhoenixMotor PhoenixRightMotor;
@@ -20,8 +21,8 @@ public class PhoenixDriveTrain {
     public Timer timer = new Timer();
     public SPIGyroscope gyroscope;
     public DoubleControlStyle controlStyle;
-
-    public PhoenixDriveTrain(PhoenixMotor lm, PhoenixMotor rm, PhoenixMotor lrm, PhoenixMotor rrm, XboxController xbx, SPIGyroscope gyro, DoubleControlStyle style) {
+    public Encoder coder;
+    public PhoenixDriveTrain(PhoenixMotor lm, PhoenixMotor rm, PhoenixMotor lrm, PhoenixMotor rrm, XboxController xbx, SPIGyroscope gyro, DoubleControlStyle style, Encoder coder) {
 
         // Assigning Values passed into constructor
         controlStyle=style;
@@ -31,6 +32,7 @@ public class PhoenixDriveTrain {
         PhoenixRightRearMotor = rrm;
         xbox = xbx;
         gyroscope = gyro;
+        this.coder=coder;
         // Creating a DifferentialDrive used for ArcadeDrive
         drive = new DifferentialDrive(PhoenixLeftMotor, PhoenixRightMotor);
         PhoenixLeftMotor.getRawMasterMotor().setStatusFramePeriod(21, 20);

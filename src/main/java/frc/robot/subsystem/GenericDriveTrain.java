@@ -4,25 +4,28 @@ package frc.robot.subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Tuple2;
 import frc.robot.control.tuple.DoubleControlStyle;
+import frc.robot.hardware.encoder.Encoder;
 import frc.robot.hardware.motor.Motor;
 import frc.robot.hardware.motor.MotorGroup;
 import frc.robot.hardware.SPIGyroscope;
 
-public class GenericDriveTrain {
+public class GenericDriveTrain extends Subsystem {
     public DifferentialDrive drive;
     public SPIGyroscope gyro;
     public Motor leftMotor;
     public Motor rightMotor;
     DoubleControlStyle controlStyle;
-    public GenericDriveTrain(Motor left, Motor right, SPIGyroscope scope, DoubleControlStyle style) {
+    public Encoder coder;
+    public GenericDriveTrain(Motor left, Motor right, SPIGyroscope scope, DoubleControlStyle style, Encoder coder) {
         controlStyle=style;
         leftMotor=left; rightMotor=right; drive=new DifferentialDrive(left, right);
         rightMotor.setInverted(true);
         rightMotor.setSafety(true);
         leftMotor.setSafety(true);
         gyro=scope;
+        this.coder=coder;
     }
-    public GenericDriveTrain(Motor leftRear, Motor leftFront, Motor rightRear, Motor rightFront, SPIGyroscope scope, DoubleControlStyle style) {
+    public GenericDriveTrain(Motor leftRear, Motor leftFront, Motor rightRear, Motor rightFront, SPIGyroscope scope, DoubleControlStyle style, Encoder coder) {
         controlStyle=style;
         leftMotor = new MotorGroup(leftFront, leftRear);
         rightMotor = new MotorGroup(rightFront, rightRear);
@@ -31,6 +34,7 @@ public class GenericDriveTrain {
         rightMotor.setSafety(true);
         leftMotor.setSafety(true);
         gyro=scope;
+        this.coder=coder;
     }
 
     public void ArcadeDrive(boolean squared) {
