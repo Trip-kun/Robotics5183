@@ -6,11 +6,22 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.PneumaticsBase;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.TimedRobot;
 
+import frc.robot.control.Scheduler;
+import frc.robot.control.command.SetClaw;
+import frc.robot.control.command.WaitCommand;
+import frc.robot.control.tuple.CombinedDouble;
+import frc.robot.hardware.encoder.CANEncoder;
+import frc.robot.hardware.encoder.TalonFXEncoder;
+import frc.robot.hardware.motor.TalonFXMotor;
+import frc.robot.hardware.pneumatic.DoubleSolenoid;
+import frc.robot.hardware.pneumatic.Solenoid;
 import frc.robot.subsystem.*;
-import frc.robot.subsystem.hardware.SPIGyroscope;
-import frc.robot.subsystem.hardware.VictorSPXMotor;
+import frc.robot.hardware.SPIGyroscope;
+import frc.robot.hardware.motor.VictorSPXMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -20,9 +31,12 @@ import frc.robot.subsystem.hardware.VictorSPXMotor;
  */
 public class Robot extends TimedRobot
 {
-    PhoenixDriveTrain driveTrain;
-
-    ControllerManager controllerManager=RobotMap.controllerManager;
+    public PhoenixDriveTrain driveTrain;
+    public PneumaticBase pneumaticBase;
+    public ControllerManager controllerManager=RobotMap.controllerManager;
+    public Arm arm;
+    public Claw claw;
+    public Scheduler scheduler;
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -30,10 +44,13 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        driveTrain = new PhoenixDriveTrain(new VictorSPXMotor(RobotMap.UpperLeftMotor), new VictorSPXMotor(RobotMap.UpperRightMotor), new VictorSPXMotor(RobotMap.LowerLeftMotor), new VictorSPXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()));
-        //driveTrain.gyro.calibrate();
-
-
+        PneumaticsBase airBase = new PneumaticsControlModule();
+        driveTrain = new PhoenixDriveTrain(new VictorSPXMotor(RobotMap.UpperLeftMotor), new VictorSPXMotor(RobotMap.UpperRightMotor), new VictorSPXMotor(RobotMap.LowerLeftMotor), new VictorSPXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()), RobotMap.driveTrainControl, new CANEncoder(0));
+        driveTrain.gyroscope.calibrate();
+        pneumaticBase=new PneumaticBase(airBase, RobotMap.compressorControl);
+        TalonFXMotor armMotor = new TalonFXMotor(RobotMap.armMotor);
+        arm = new Arm(armMotor, new DoubleSolenoid(airBase.makeDoubleSolenoid(0, 1)), RobotMap.armControl, new TalonFXEncoder(armMotor.getRawMasterMotor()));
+        claw = new Claw(new Solenoid(airBase.makeSolenoid(2)), RobotMap.clawControl);
     }
 
     /**
@@ -61,14 +78,16 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-
-       }
+        scheduler.scheduleCommand(new SetClaw(claw, true));
+        scheduler.scheduleCommand(new WaitCommand(5, claw));
+        scheduler.scheduleCommand(new SetClaw(claw, false));
+    }
 
     /** This method is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic()
     {
-
+        scheduler.run();
     }
 
     /** This function is called once when teleop is enabled. */
@@ -78,7 +97,10 @@ public class Robot extends TimedRobot
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        arm.teleop();
+
         driveTrain.ArcadeDrive(true);
+        pneumaticBase.teleop();
     }
 
     /** This function is called once when the robot is disabled. */

@@ -1,4 +1,4 @@
-package frc.robot.subsystem.control;
+package frc.robot.control.tuple;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Tuple2;

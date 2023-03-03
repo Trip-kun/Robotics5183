@@ -1,4 +1,4 @@
-package frc.robot.subsystem.hardware;
+package frc.robot.hardware.motor;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 

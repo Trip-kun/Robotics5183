@@ -1,7 +1,6 @@
-package frc.robot.subsystem;
+package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotMap;
 
 public class ControllerManager {
     private XboxController controller1;

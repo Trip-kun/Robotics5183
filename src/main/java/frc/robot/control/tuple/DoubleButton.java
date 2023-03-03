@@ -1,7 +1,9 @@
-package frc.robot.subsystem.control;
+package frc.robot.control.tuple;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Tuple2;
+import frc.robot.control.Button;
+import frc.robot.control.ButtonStyle;
 
 public class DoubleButton extends DoubleControlStyle {
     private ButtonStyle style;
