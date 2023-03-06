@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.control.Button;
 import frc.robot.control.ButtonStyle;
 
+
 public class SingleButton extends SingleControlStyle {
     private ButtonStyle style;
     private Button button;
@@ -25,10 +26,10 @@ public class SingleButton extends SingleControlStyle {
                     return unpressed;
                 }
             case Set:
-                if (lastState && !buttonVal) {
+                if (!lastState && buttonVal) {
                     swapped=!swapped;
-                    lastState= false;
                 }
+                lastState=buttonVal;
                 if (swapped) {
                     return pressed;
                 } else {
