@@ -2,11 +2,7 @@ package frc.robot.control;
 
 import frc.robot.control.command.Command;
 import frc.robot.subsystem.Subsystem;
-
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 
@@ -61,6 +57,7 @@ public class Scheduler {
             }
         for (Command c: temp) {
             commandQueue.remove(c);
+            activeCommands.add(c);
             c.start();
         }
     }
