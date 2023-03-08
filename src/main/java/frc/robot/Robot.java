@@ -63,6 +63,7 @@ public class Robot extends TimedRobot
     @Override
     public void robotPeriodic() {
         driveTrain.periodic();
+        arm.periodic();
     }
 
     /**
@@ -98,7 +99,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() {
         arm.teleop();
-
+        claw.teleop();
         driveTrain.ArcadeDrive(true);
         pneumaticBase.teleop();
     }

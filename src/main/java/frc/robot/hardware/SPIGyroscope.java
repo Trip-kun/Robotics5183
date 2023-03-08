@@ -19,9 +19,8 @@ public class SPIGyroscope {
     }
 
     public double getAngle() {
-        int x = (int) (gyro.getAngle() * 1);
-        double y = x / 1;
-        return Util.normalize_angle_degrees(y);
+        int x = (int) (gyro.getAngle() * 10);
+        return x / 10;
     }
 
     // DEGREES PER SECOND

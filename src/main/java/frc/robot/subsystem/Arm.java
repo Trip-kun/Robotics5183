@@ -43,4 +43,7 @@ public class Arm extends Subsystem {
     public DoubleControlStyle getControlStyle() {
         return controlStyle;
     }
+    public void setControlStyle(DoubleControlStyle style) {
+        controlStyle=style;
+    }
 }

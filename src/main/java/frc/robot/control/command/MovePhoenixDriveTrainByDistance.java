@@ -41,6 +41,7 @@ public class MovePhoenixDriveTrainByDistance extends Command {
         } else {
             dummy.updateValue(0, speed);
         }
+        driveTrain.autonomous(dummy);
     }
 
     @Override
