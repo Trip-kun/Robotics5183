@@ -44,6 +44,7 @@ public class TurnPhoenixDriveTrain extends Command {
     @Override
     public void clean() {
         driveTrain.controlStyle=style;
+        driveTrain.ArcadeDrive(true);
     }
 
     @Override

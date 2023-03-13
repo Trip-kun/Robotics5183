@@ -19,7 +19,6 @@ public class PhoenixDriveTrain extends Subsystem {
     public PhoenixMotor PhoenixRightRearMotor;
     public PhoenixMotor PhoenixLeftRearMotor;
     public XboxController xbox;
-    public Timer timer = new Timer();
     public SPIGyroscope gyroscope;
     public DoubleControlStyle controlStyle;
     public Encoder coder;

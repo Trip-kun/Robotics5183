@@ -24,7 +24,7 @@ public class HalfStick extends SingleControlStyle {
                 return xbox.getRightX();
             case rightY:
                 return xbox.getRightY();
-            case hatX:
+            case hatY:
                 int x = xbox.getPOV();
                 if (x==0 || x==45 || x==315) {
                     return 1;
@@ -33,7 +33,7 @@ public class HalfStick extends SingleControlStyle {
                 } else {
                     return 0;
                 }
-            case hatY:
+            case hatX:
                 int y = xbox.getPOV();
                 if (y==90 || y==45 || y==135) {
                     return 1;

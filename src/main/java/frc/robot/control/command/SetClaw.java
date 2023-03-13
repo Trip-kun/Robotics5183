@@ -37,6 +37,7 @@ public class SetClaw extends Command {
     @Override
     public void clean() {
         claw.setStyle(oldStyle);
+        claw.autonomous(oldStyle);
     }
 
     @Override

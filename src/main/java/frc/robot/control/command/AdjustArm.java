@@ -71,6 +71,7 @@ public class AdjustArm extends Command{
     @Override
     public void clean() {
         arm.setControlStyle(style);
+        arm.autonomous(style);
     }
 
     @Override

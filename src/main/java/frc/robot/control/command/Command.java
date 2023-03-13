@@ -20,7 +20,7 @@ public abstract class Command {
         }
     }
     public ArrayList<Subsystem> getRequiredSubsystems() {
-        return (ArrayList<Subsystem>) subsystemList;
+        return subsystemList;
     }
     public Command() {
         subsystemList=new ArrayList<>();

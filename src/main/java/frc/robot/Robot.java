@@ -10,10 +10,11 @@ import edu.wpi.first.wpilibj.PneumaticsBase;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.TimedRobot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.control.Scheduler;
 import frc.robot.control.command.SetClaw;
 import frc.robot.control.command.WaitCommand;
-import frc.robot.control.tuple.CombinedDouble;
 import frc.robot.hardware.encoder.CANEncoder;
 import frc.robot.hardware.encoder.TalonFXEncoder;
 import frc.robot.hardware.motor.TalonFXMotor;
@@ -32,6 +33,13 @@ import frc.robot.hardware.motor.VictorSPXMotor;
 public class Robot extends TimedRobot
 {
     public PhoenixDriveTrain driveTrain;
+    private final String kLeftBalance = "Left Balance";
+    private final String kLeftBasic = "Left No Balance";
+    private final String kMiddleBalance = "Middle Balance";
+    private final String kMiddleBasic = "Middle No Balance";
+    private final String kRightBalance = "Right Balance";
+    private final String kRightBasic="Right No Balance";
+    private SendableChooser<String> autonChooser = new SendableChooser<>();
     public PneumaticBase pneumaticBase;
     public ControllerManager controllerManager=RobotMap.controllerManager;
     public Arm arm;
@@ -49,8 +57,16 @@ public class Robot extends TimedRobot
         driveTrain.gyroscope.calibrate();
         pneumaticBase=new PneumaticBase(airBase, RobotMap.compressorControl);
         TalonFXMotor armMotor = new TalonFXMotor(RobotMap.armMotor);
-        arm = new Arm(armMotor, new DoubleSolenoid(airBase.makeDoubleSolenoid(0, 1)), RobotMap.armControl, new TalonFXEncoder(armMotor.getRawMasterMotor()));
-        claw = new Claw(new Solenoid(airBase.makeSolenoid(2)), RobotMap.clawControl);
+        arm = new Arm(armMotor, new DoubleSolenoid(airBase.makeDoubleSolenoid(1, 2)), RobotMap.armControl, new TalonFXEncoder(armMotor.getRawMasterMotor()));
+        claw = new Claw(new Solenoid(airBase.makeSolenoid(0)), RobotMap.clawControl);
+        autonChooser.setDefaultOption(kLeftBasic, kLeftBasic);
+        autonChooser.addOption(kLeftBalance, kLeftBalance);
+        autonChooser.addOption(kMiddleBasic, kMiddleBasic);
+        autonChooser.addOption(kMiddleBalance, kMiddleBalance);
+        autonChooser.addOption(kRightBasic, kRightBasic);
+        autonChooser.addOption(kRightBalance, kRightBalance);
+        SmartDashboard.putData(autonChooser);
+
     }
 
     /**
@@ -79,9 +95,20 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        scheduler.scheduleCommand(new SetClaw(claw, true));
-        scheduler.scheduleCommand(new WaitCommand(5, claw));
-        scheduler.scheduleCommand(new SetClaw(claw, false));
+        String selected = autonChooser.getSelected();
+        switch (selected) {
+            case kLeftBasic:
+            case kLeftBalance:
+            case kMiddleBasic:
+            case kMiddleBalance:
+            case kRightBasic:
+            case kRightBalance:
+                scheduler.scheduleCommand(new SetClaw(claw, true));
+                scheduler.scheduleCommand(new WaitCommand(5, claw));
+                scheduler.scheduleCommand(new SetClaw(claw, false));
+                break;
+        }
+
     }
 
     /** This method is called periodically during autonomous. */

@@ -27,7 +27,7 @@ public class RobotMap {
      static final CombinedDouble armControl = new CombinedDouble(new HalfStick(controllerManager.getSecondController(), StickMode.rightY), new HalfStick(controllerManager.getSecondController(), StickMode.hatY));
     public static final SingleButton compressorControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Set, Button.RightBumper, 0, 1);
     //Gear Ratios, INCHES
-    public static final SingleButton clawControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Switch, Button.A, 0, 1);
+    public static final SingleButton clawControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Switch, Button.A, 1, 0);
     public static final double TalonGearbox=5.95;
     public static final int TalonDiameter = 6;
 
