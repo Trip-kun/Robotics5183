@@ -73,8 +73,8 @@ public class PhoenixDriveTrain extends Subsystem {
     }
     public void ArcadeDrive(boolean squared) {
         Tuple2<Double> control =controlStyle.getValue();
-        drive.arcadeDrive(-control.val2, -control.val1, squared);
-        drive2.arcadeDrive(control.val2, control.val1, true);
+        drive.arcadeDrive(control.val2, control.val1, squared);
+        drive2.arcadeDrive(-control.val2, -control.val1, true);
     }
 
 
@@ -92,7 +92,7 @@ public class PhoenixDriveTrain extends Subsystem {
     public void autonomous(DoubleControlStyle controlStyle) {
         Tuple2<Double> control = controlStyle.getValue();
 
-        drive.arcadeDrive(control.val2, control.val1, true);
+        drive.arcadeDrive(-control.val2, -control.val1, true);
         drive2.arcadeDrive(control.val2, control.val1, true);
     }
     public void periodic() {
@@ -100,6 +100,7 @@ public class PhoenixDriveTrain extends Subsystem {
         // In all Robot Configs run Left and Right motor periodics
         // In STEVE run rear motor periodics
                 drive.feedWatchdog();
+                drive2.feedWatchdog();
                 PhoenixLeftRearMotor.periodic();
                 PhoenixRightRearMotor.periodic();
                 PhoenixLeftMotor.periodic();

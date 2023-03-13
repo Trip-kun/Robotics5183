@@ -22,6 +22,8 @@ public class CANEncoder extends Encoder {
 
     @Override
     public double getUnitsDegrees() {
+
+
         return encoder.getPosition();
     }
     @Override

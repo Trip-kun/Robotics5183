@@ -23,7 +23,7 @@ public class RobotMap {
     public static final int armMotor=4;
 
     public static final ControllerManager controllerManager = new ControllerManager().init();
-    public static final FullStick driveTrainControl=new FullStick(controllerManager.getFirstController(), StickMode.rightX,StickMode.leftY, new RampCurve(RampCurve.Curve.Exponential, 300, 0.02), new RampCurve(RampCurve.Curve.Exponential, 300.0, 0.02) );
+    public static final FullStick driveTrainControl=new FullStick(controllerManager.getFirstController(), StickMode.leftY,StickMode.rightX, new RampCurve(RampCurve.Curve.Exponential, 300, 0.02), new RampCurve(RampCurve.Curve.Exponential, 300.0, 0.02) );
      static final CombinedDouble armControl = new CombinedDouble(new HalfStick(controllerManager.getSecondController(), StickMode.rightY), new HalfStick(controllerManager.getSecondController(), StickMode.hatY));
     public static final SingleButton compressorControl = new SingleButton(controllerManager.getSecondController(), ButtonStyle.Set, Button.RightBumper, 0, 1);
     //Gear Ratios, INCHES

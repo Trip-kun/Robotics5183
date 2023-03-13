@@ -7,7 +7,7 @@ public class Claw extends Subsystem {
     private SingleControlStyle style;
     private Solenoid claw;
     public void teleop() {
-
+        control(style);
     }
 
     public void setStyle(SingleControlStyle style) {

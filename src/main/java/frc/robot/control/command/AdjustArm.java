@@ -76,6 +76,6 @@ public class AdjustArm extends Command{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return pistonFinished && spoolFinished;
     }
 }

@@ -22,13 +22,16 @@ public class Scheduler {
         activeSubsystems.clear();
         temp.clear();
         for (Command c : activeCommands) {
+            System.out.println("Running " + c);
             c.run();
             if (c.isFinished()) {
+                System.out.println("Finishing " + c);
                 c.clean();
                 temp.add(c);
             } else {
                 for (Subsystem s : c.getRequiredSubsystems()) {
                     if (!activeSubsystems.contains(s)) {
+
                         activeSubsystems.add(s);
                     }
                 }
@@ -59,6 +62,7 @@ public class Scheduler {
             commandQueue.remove(c);
             activeCommands.add(c);
             c.start();
+            System.out.println("Starting " + c);
         }
     }
 }

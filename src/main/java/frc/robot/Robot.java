@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.control.Scheduler;
+import frc.robot.control.command.MovePhoenixDriveTrainByTime;
 import frc.robot.control.command.SetClaw;
 import frc.robot.control.command.WaitCommand;
 import frc.robot.hardware.encoder.CANEncoder;
 import frc.robot.hardware.encoder.TalonFXEncoder;
+import frc.robot.hardware.motor.SparkMaxMotor;
 import frc.robot.hardware.motor.TalonFXMotor;
 import frc.robot.hardware.pneumatic.DoubleSolenoid;
 import frc.robot.hardware.pneumatic.Solenoid;
@@ -44,7 +46,7 @@ public class Robot extends TimedRobot
     public ControllerManager controllerManager=RobotMap.controllerManager;
     public Arm arm;
     public Claw claw;
-    public Scheduler scheduler;
+    public Scheduler scheduler = new Scheduler();
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -57,7 +59,7 @@ public class Robot extends TimedRobot
         driveTrain.gyroscope.calibrate();
         pneumaticBase=new PneumaticBase(airBase, RobotMap.compressorControl);
         TalonFXMotor armMotor = new TalonFXMotor(RobotMap.armMotor);
-        arm = new Arm(armMotor, new DoubleSolenoid(airBase.makeDoubleSolenoid(1, 2)), RobotMap.armControl, new TalonFXEncoder(armMotor.getRawMasterMotor()));
+        arm = new Arm(new SparkMaxMotor(5), new DoubleSolenoid(airBase.makeDoubleSolenoid(1, 2)), RobotMap.armControl, new TalonFXEncoder(armMotor.getRawMasterMotor()));
         claw = new Claw(new Solenoid(airBase.makeSolenoid(0)), RobotMap.clawControl);
         autonChooser.setDefaultOption(kLeftBasic, kLeftBasic);
         autonChooser.addOption(kLeftBalance, kLeftBalance);
@@ -103,9 +105,10 @@ public class Robot extends TimedRobot
             case kMiddleBalance:
             case kRightBasic:
             case kRightBalance:
-                scheduler.scheduleCommand(new SetClaw(claw, true));
-                scheduler.scheduleCommand(new WaitCommand(5, claw));
                 scheduler.scheduleCommand(new SetClaw(claw, false));
+                scheduler.scheduleCommand(new WaitCommand(5, claw));
+                scheduler.scheduleCommand(new SetClaw(claw, true));
+                scheduler.scheduleCommand(new MovePhoenixDriveTrainByTime(driveTrain, 1.1, 0.9, true));
                 break;
         }
 

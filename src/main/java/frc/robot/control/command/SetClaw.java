@@ -20,10 +20,11 @@ public class SetClaw extends Command {
             x=1;
         }
         Duration d = Duration.between(start, Instant.now());
-        if (d.toSeconds()>1) {
+        if (d.toSeconds()>0.1) {
             isFinished=true;
         }
         dummy.setValue(x);
+        claw.autonomous(dummy);
     }
 
     @Override
@@ -37,7 +38,6 @@ public class SetClaw extends Command {
     @Override
     public void clean() {
         claw.setStyle(oldStyle);
-        claw.autonomous(oldStyle);
     }
 
     @Override
