@@ -23,7 +23,7 @@ public class TurnPhoenixDriveTrain extends Command {
     }
     @Override
     public void run() {
-        double x = Math.abs((driveTrain.gyroscope.getAngle()-startAngle)/(distanceToTurn));
+        double x = Math.abs((driveTrain.gyroscope.getDegrees()-startAngle)/(distanceToTurn));
         double sqrt = Math.sqrt(1 - (x * x / 2));
         if (direction==Direction.CLOCKWISE) {
             
@@ -38,7 +38,7 @@ public class TurnPhoenixDriveTrain extends Command {
     public void start() {
         style = driveTrain.controlStyle;
         driveTrain.controlStyle=dummy;
-        startAngle=driveTrain.gyroscope.getAngle();
+        startAngle=driveTrain.gyroscope.getDegrees();
     }
 
     @Override
@@ -50,13 +50,13 @@ public class TurnPhoenixDriveTrain extends Command {
     @Override
     public boolean isFinished() {
         if (direction == Direction.CLOCKWISE) {
-            if (driveTrain.gyroscope.getAngle()+distanceToTurn>=startAngle+distanceToTurn) {
+            if (driveTrain.gyroscope.getDegrees()+distanceToTurn>=startAngle+distanceToTurn) {
                 return true;
             } else {
                 return false;
             }
         } else {
-            if (driveTrain.gyroscope.getAngle()-distanceToTurn<=startAngle-distanceToTurn) {
+            if (driveTrain.gyroscope.getDegrees()-distanceToTurn<=startAngle-distanceToTurn) {
                 return true;
             } else {
                 return false;

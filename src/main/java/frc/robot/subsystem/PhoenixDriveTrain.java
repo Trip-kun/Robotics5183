@@ -1,13 +1,12 @@
 package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Tuple2;
 import frc.robot.control.tuple.DoubleControlStyle;
-import frc.robot.hardware.SPIGyroscope;
+import frc.robot.hardware.gyro.SingleAxisGyroscope;
 import frc.robot.hardware.encoder.Encoder;
 import frc.robot.hardware.motor.PhoenixMotor;
 
@@ -19,10 +18,10 @@ public class PhoenixDriveTrain extends Subsystem {
     public PhoenixMotor PhoenixRightRearMotor;
     public PhoenixMotor PhoenixLeftRearMotor;
     public XboxController xbox;
-    public SPIGyroscope gyroscope;
+    public SingleAxisGyroscope gyroscope;
     public DoubleControlStyle controlStyle;
     public Encoder coder;
-    public PhoenixDriveTrain(PhoenixMotor lm, PhoenixMotor rm, PhoenixMotor lrm, PhoenixMotor rrm, XboxController xbx, SPIGyroscope gyro, DoubleControlStyle style, Encoder coder) {
+    public PhoenixDriveTrain(PhoenixMotor lm, PhoenixMotor rm, PhoenixMotor lrm, PhoenixMotor rrm, XboxController xbx, SingleAxisGyroscope gyro, DoubleControlStyle style, Encoder coder) {
 
         // Assigning Values passed into constructor
         controlStyle=style;

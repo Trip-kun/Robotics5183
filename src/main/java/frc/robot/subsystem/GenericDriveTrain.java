@@ -7,7 +7,7 @@ import frc.robot.control.tuple.DoubleControlStyle;
 import frc.robot.hardware.encoder.Encoder;
 import frc.robot.hardware.motor.Motor;
 import frc.robot.hardware.motor.MotorGroup;
-import frc.robot.hardware.SPIGyroscope;
+import frc.robot.hardware.gyro.SPIGyroscope;
 
 public class GenericDriveTrain extends Subsystem {
     public DifferentialDrive drive;

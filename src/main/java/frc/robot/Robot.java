@@ -5,10 +5,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.PneumaticsBase;
-import edu.wpi.first.wpilibj.PneumaticsControlModule;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,14 +14,16 @@ import frc.robot.control.command.MovePhoenixDriveTrainByTime;
 import frc.robot.control.command.SetClaw;
 import frc.robot.control.command.WaitCommand;
 import frc.robot.hardware.encoder.CANEncoder;
+import frc.robot.hardware.encoder.NEOEncoder;
 import frc.robot.hardware.encoder.TalonFXEncoder;
+import frc.robot.hardware.gyro.ADISAxisGyroscope;
+import frc.robot.hardware.gyro.SingleAxisGyroscope;
 import frc.robot.hardware.motor.SparkMaxMotor;
 import frc.robot.hardware.motor.TalonFXMotor;
 import frc.robot.hardware.pneumatic.DoubleSolenoid;
 import frc.robot.hardware.pneumatic.Solenoid;
 import frc.robot.subsystem.*;
-import frc.robot.hardware.SPIGyroscope;
-import frc.robot.hardware.motor.VictorSPXMotor;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -47,6 +46,7 @@ public class Robot extends TimedRobot
     public Arm arm;
     public Claw claw;
     public Scheduler scheduler = new Scheduler();
+    public ADIS16448_IMU gyro;
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -54,12 +54,13 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
+        gyro=new ADIS16448_IMU();
         PneumaticsBase airBase = new PneumaticsControlModule();
-        driveTrain = new PhoenixDriveTrain(new VictorSPXMotor(RobotMap.UpperLeftMotor), new VictorSPXMotor(RobotMap.UpperRightMotor), new VictorSPXMotor(RobotMap.LowerLeftMotor), new VictorSPXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new SPIGyroscope(new ADXRS450_Gyro()), RobotMap.driveTrainControl, new CANEncoder(0));
+        driveTrain = new PhoenixDriveTrain(new TalonFXMotor(RobotMap.UpperLeftMotor), new TalonFXMotor(RobotMap.UpperRightMotor), new TalonFXMotor(RobotMap.LowerLeftMotor), new TalonFXMotor(RobotMap.LowerRightMotor), controllerManager.getFirstController(), new ADISAxisGyroscope(gyro, SingleAxisGyroscope.Axis.YAW), RobotMap.driveTrainControl, new CANEncoder(0));
         driveTrain.gyroscope.calibrate();
         pneumaticBase=new PneumaticBase(airBase, RobotMap.compressorControl);
-        TalonFXMotor armMotor = new TalonFXMotor(RobotMap.armMotor);
-        arm = new Arm(new SparkMaxMotor(5), new DoubleSolenoid(airBase.makeDoubleSolenoid(1, 2)), RobotMap.armControl, new TalonFXEncoder(armMotor.getRawMasterMotor()));
+        SparkMaxMotor armMotor = new SparkMaxMotor(RobotMap.armMotor);
+        arm = new Arm(armMotor, new DoubleSolenoid(airBase.makeDoubleSolenoid(1, 2)), RobotMap.armControl, new NEOEncoder(armMotor));
         claw = new Claw(new Solenoid(airBase.makeSolenoid(0)), RobotMap.clawControl);
         autonChooser.setDefaultOption(kLeftBasic, kLeftBasic);
         autonChooser.addOption(kLeftBalance, kLeftBalance);
