@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.control.Scheduler;
+import frc.robot.control.command.Balance;
 import frc.robot.control.command.MovePhoenixDriveTrainByTime;
 import frc.robot.control.command.SetClaw;
 import frc.robot.control.command.WaitCommand;
@@ -106,10 +107,11 @@ public class Robot extends TimedRobot
             case kMiddleBalance:
             case kRightBasic:
             case kRightBalance:
-                scheduler.scheduleCommand(new SetClaw(claw, false));
-                scheduler.scheduleCommand(new WaitCommand(5, claw));
-                scheduler.scheduleCommand(new SetClaw(claw, true));
-                scheduler.scheduleCommand(new MovePhoenixDriveTrainByTime(driveTrain, 1.1, 0.9, true));
+                //scheduler.scheduleCommand(new SetClaw(claw, false));
+                //scheduler.scheduleCommand(new WaitCommand(5, claw));
+                //scheduler.scheduleCommand(new SetClaw(claw, true));
+               // scheduler.scheduleCommand(new MovePhoenixDriveTrainByTime(driveTrain, 1.1, 0.9, true));
+                scheduler.scheduleCommand(new Balance(driveTrain, new ADISAxisGyroscope(gyro, SingleAxisGyroscope.Axis.PITCH)));
                 break;
         }
 
